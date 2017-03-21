@@ -1,4 +1,6 @@
-package com.example.vladislav.currencyconverter;
+package com.example.vladislav.currencyconverter.datasource;
+
+import com.example.vladislav.currencyconverter.XMLParser;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -8,12 +10,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import static java.util.logging.Logger.getLogger;
@@ -104,14 +103,13 @@ public class CurrencyDownloader {
             file.createNewFile();
             log.log(Level.WARNING, "File " + filePath + " created.");
         }
-//        System.out.println(file.length());
         fileWriter = new FileWriter(file);
         bufferedWriter = new BufferedWriter(fileWriter);
         log.log(Level.INFO, "Saving currency data to file named - " + filePath);
 
         String sCurrentLine;
         while ((sCurrentLine = bufferedReader.readLine()) != null) {
-            System.out.println(sCurrentLine);
+//            System.out.println(sCurrentLine);
             bufferedWriter.write(sCurrentLine);
         }
         log.log(Level.INFO, "Data is saved.");
@@ -119,6 +117,7 @@ public class CurrencyDownloader {
         inputStream.close();
         fileWriter.close();
 //        bufferedWriter.close();
+//        System.out.println(file.length());
     }
 
 }

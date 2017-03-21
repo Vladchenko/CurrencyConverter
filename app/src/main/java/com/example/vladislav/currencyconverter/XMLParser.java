@@ -1,17 +1,14 @@
 package com.example.vladislav.currencyconverter;
 
-import com.example.vladislav.currencyconverter.datasource.CurrenciesList;
 import com.example.vladislav.currencyconverter.datasource.ValCurs;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 /**
  * Created by vladislav on 20.03.17.
@@ -24,7 +21,7 @@ public class XMLParser {
         FileReader fileReader = null;
         Serializer serializer = new Persister();
         File source = new File(NetworkService.CURRENCIES_FILE);
-        System.out.println(source.length());
+//        System.out.println(source.length());  //0 why?
         try {
             fileReader = new FileReader(source);
         } catch (FileNotFoundException e) {

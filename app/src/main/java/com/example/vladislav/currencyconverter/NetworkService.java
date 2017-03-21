@@ -2,15 +2,9 @@ package com.example.vladislav.currencyconverter;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.Context;
-import android.util.Log;
 
-import com.example.vladislav.currencyconverter.datasource.CurrenciesList;
+import com.example.vladislav.currencyconverter.datasource.CurrencyDownloader;
 
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
-
-import java.io.File;
 import java.io.IOException;
 
 /**

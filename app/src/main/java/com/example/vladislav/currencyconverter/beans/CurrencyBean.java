@@ -2,16 +2,17 @@ package com.example.vladislav.currencyconverter.beans;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 
 /**
  * Created by vladislav on 20.03.17.
  */
 
-@Element(name="Valute")
+@Root(name="Valute")
 public class CurrencyBean {
 
     /**
-     * Contents of a currency entry read from a web.
+     * Temporary message to know the contents of an currency entry read from a web.
      *
      * <Valute ID="R01589">
      *      <NumCode>960</NumCode>
@@ -24,18 +25,18 @@ public class CurrencyBean {
 
     @Attribute(name="ID")
     private String ID;              // say, "R01589"
-    @Element(name="NumCode")
+    @Element
     private int numericCode;        // say, 960
-    @Element(name="CharCode")
+    @Element
     private String characterCode;   // say, XDR
-    @Element(name="Name")
+    @Element
     private String name;            // no idea what's the name of this currency.
-    @Element(name="Value")
-    private String value;           // say, 78,5631
-    @Element(name="Nominal")
-    private double nominal;         // say, 1
+    @Element
+    private double value;           // say, 78,5631
 
-    public CurrencyBean() {}
+    public CurrencyBean() {
+
+    }
 
     public String getID() {
         return ID;
@@ -69,12 +70,11 @@ public class CurrencyBean {
         this.name = name;
     }
 
-    public String getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(double value) {
         this.value = value;
     }
-
 }
