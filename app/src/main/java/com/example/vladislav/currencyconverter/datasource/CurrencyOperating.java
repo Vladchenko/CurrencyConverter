@@ -22,18 +22,22 @@ public class CurrencyOperating {
 
         CurrencyBean currencyBean = new CurrencyBean();
         currencyBean.setCharacterCode("USD");
+        currencyBean.setValue(56.4204);
         mCurrencyContainer.getmCurrenciesList().add(currencyBean);
 
         currencyBean = new CurrencyBean();
         currencyBean.setCharacterCode("RUB");
+        currencyBean.setValue(1);
         mCurrencyContainer.getmCurrenciesList().add(currencyBean);
 
         currencyBean = new CurrencyBean();
         currencyBean.setCharacterCode("XDR");
+        currencyBean.setValue(32.6018);
         mCurrencyContainer.getmCurrenciesList().add(currencyBean);
 
         currencyBean = new CurrencyBean();
         currencyBean.setCharacterCode("CHK");
+        currencyBean.setValue(16.2729);
         mCurrencyContainer.getmCurrenciesList().add(currencyBean);
 
     }
