@@ -5,6 +5,7 @@ package com.example.vladislav.currencyconverter;
  */
 public class Consts {
 
+    public static final String EXCEPTION = "exception";
 
     private static Consts ourInstance = new Consts();
 

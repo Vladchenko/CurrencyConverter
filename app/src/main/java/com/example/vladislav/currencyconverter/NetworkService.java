@@ -23,18 +23,25 @@ public class NetworkService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public void onCreate() {
+        super.onCreate();
         CURRENCIES_FILE = getBaseContext().getFilesDir().getPath().toString()
                 + "/Currencies.xml";
-        //Environment.DIRECTORY_DOWNLOADS
+    }
+
+    @Override
+    protected void onHandleIntent(Intent intent) {
         try {
             CurrencyDownloader currencyDownloader =
-                    new CurrencyDownloader("http://www.cbr.ru/scripts/XML_daily.asp",
+                    new CurrencyDownloader("http://www.cbr.ru/scripts/XML_daily.asp3546rtuy",
                             CURRENCIES_FILE);
         } catch (IOException e) {
             e.printStackTrace();
-            return;
-//            Log.e("NetworkService",e.getMessage());
+            Intent intentInformInitialActivity = new Intent().
+                    setAction(Consts.EXCEPTION).
+                    putExtra(Consts.EXCEPTION,
+                            e.toString());
+            sendBroadcast(intentInformInitialActivity);
         }
 
     }
