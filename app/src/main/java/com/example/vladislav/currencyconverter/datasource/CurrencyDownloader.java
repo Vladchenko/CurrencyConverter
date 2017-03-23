@@ -100,22 +100,16 @@ public class CurrencyDownloader {
             file.createNewFile();
             log.log(Level.WARNING, "File " + filePath + " created.");
         }
-//        fileWriter = new FileWriter(file);
-//        bufferedWriter = new BufferedWriter(fileWriter);
         log.log(Level.INFO, "Saving currency data to file named - " + filePath);
 
         String sCurrentLine;
         while ((sCurrentLine = bufferedReader.readLine()) != null) {
-//            System.out.println(sCurrentLine);
-//            bufferedWriter.write(sCurrentLine);
             printWriter.println(sCurrentLine);
         }
         log.log(Level.INFO, "Data is saved.");
 
         inputStream.close();
-//        fileWriter.close();
         printWriter.close();
-//        bufferedWriter.close();
     }
 
 }

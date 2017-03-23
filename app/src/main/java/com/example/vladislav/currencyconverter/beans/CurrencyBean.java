@@ -8,7 +8,7 @@ import org.simpleframework.xml.Root;
  * Created by vladislav on 20.03.17.
  */
 
-@Root(name="Valute")
+@Element(name="Valute")
 public class CurrencyBean {
 
     /**
@@ -25,14 +25,16 @@ public class CurrencyBean {
 
     @Attribute(name="ID")
     private String ID;              // say, "R01589"
-    @Element
+    @Element(name="NumCode")
     private int numericCode;        // say, 960
-    @Element
+    @Element(name="CharCode")
     private String characterCode;   // say, XDR
-    @Element
+    @Element(name="Name")
     private String name;            // no idea what's the name of this currency.
-    @Element
-    private double value;           // say, 78,5631
+    @Element(name="Value")
+    private String value;           // say, 78,5631
+    @Element(name="Nominal")
+    private double nominal;         // say, 1
 
     public CurrencyBean() {
 
@@ -70,11 +72,11 @@ public class CurrencyBean {
         this.name = name;
     }
 
-    public double getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(String value) {
         this.value = value;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.vladislav.currencyconverter;
 
+import com.example.vladislav.currencyconverter.beans.CurrenciesContainer;
 import com.example.vladislav.currencyconverter.datasource.ValCurs;
 
 import org.simpleframework.xml.Serializer;
@@ -22,25 +23,9 @@ public class XMLParser {
         Serializer serializer = new Persister();
         File source = new File(Consts.getmCurrenciesFile());
 
-//        System.out.println("\n\n" + Consts.getmCurrenciesFile());
-//        System.out.println(source.length() + "\n\n");  //0 why?
-
         try {
-            fileReader = new FileReader(source);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        String sCurrentLine;
-        int c;
-        try {
-            while ((c = fileReader.read()) != -1) {
-                System.out.println("File data read: " + c);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            ValCurs example = serializer.read(ValCurs.class, source);
+            CurrenciesContainer example = serializer.read(CurrenciesContainer.class, source);
+            System.out.println("Deserialized");
         } catch (Exception e) {
             e.printStackTrace();
         }

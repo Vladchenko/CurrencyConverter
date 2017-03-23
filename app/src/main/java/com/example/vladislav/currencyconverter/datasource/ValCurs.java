@@ -18,7 +18,7 @@ public class ValCurs {
     @Attribute(name="Date", required=false)
     String date;
 
-    @Element(name="Valute", required=false)
+    @Element(name="ValCurs", required=false)
     Valute valute;
 
     public String getName() {return this.name;}
@@ -30,8 +30,7 @@ public class ValCurs {
     public Valute getValute() {return this.valute;}
     public void setValute(Valute value) {this.valute = value;}
 
-
-
+    @Element(name="Valute")
     public static class Valute {
 
         @Element(name="CharCode", required=false)
