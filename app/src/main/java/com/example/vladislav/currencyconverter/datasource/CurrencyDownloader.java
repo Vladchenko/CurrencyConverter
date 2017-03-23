@@ -1,5 +1,10 @@
 package com.example.vladislav.currencyconverter.datasource;
 
+import android.support.annotation.VisibleForTesting;
+
+import com.example.vladislav.currencyconverter.Consts;
+import com.example.vladislav.currencyconverter.Utils;
+import com.example.vladislav.currencyconverter.WrongURLException;
 import com.example.vladislav.currencyconverter.XMLParser;
 
 import java.io.BufferedInputStream;
@@ -25,21 +30,16 @@ public class CurrencyDownloader {
 
     private static InputStream stream = null;
     private static Logger log = getLogger(CurrencyDownloader.class.getName());
-//    private String Url;
 
     public CurrencyDownloader(String Url, String filePath) throws IOException {
 
-//        stream = getStreamFromUrl(Url);
-//        readStream(stream);
-
-        stream = getStreamFromUrl(Url);
-        saveXMLToFile(stream, filePath);
-
+        saveXMLToFile(getStreamFromUrl(Url), filePath);
         new XMLParser().parse();
 
     }
 
-    private InputStream getStreamFromUrl(String Url) throws IOException {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public InputStream getStreamFromUrl(String Url) throws IOException {
 
         URL url = null;
         url = new URL(Url);
@@ -80,12 +80,8 @@ public class CurrencyDownloader {
         }
     }
 
-    // TODO - Maybe make a separate class - CurrencyParser.
-    private void parseXMLFromStream() {
-        // Is it even possible to parse xml from inputstream ?
-    }
-
-    private void saveXMLToFile(InputStream inputStream, String filePath) throws IOException {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void saveXMLToFile(InputStream inputStream, String filePath) throws IOException {
 
         InputStreamReader reader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(reader);

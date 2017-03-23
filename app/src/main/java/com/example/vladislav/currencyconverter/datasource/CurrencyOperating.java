@@ -11,7 +11,7 @@ import com.example.vladislav.currencyconverter.beans.CurrencyBean;
 public class CurrencyOperating {
 
     private CurrenciesContainer mCurrencyContainer = new CurrenciesContainer();
-    XMLParser mXmlParser = new XMLParser();
+    private XMLParser mXmlParser = new XMLParser();
 
     public CurrencyOperating() {
         populateContainerByDefault();

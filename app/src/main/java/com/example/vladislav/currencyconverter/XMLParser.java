@@ -20,7 +20,8 @@ public class XMLParser {
 
         FileReader fileReader = null;
         Serializer serializer = new Persister();
-        File source = new File(NetworkService.CURRENCIES_FILE);
+        File source = new File(Consts.getmCurrenciesFile());
+        System.out.println(Consts.getmCurrenciesFile());
 //        System.out.println(source.length());  //0 why?
         try {
             fileReader = new FileReader(source);

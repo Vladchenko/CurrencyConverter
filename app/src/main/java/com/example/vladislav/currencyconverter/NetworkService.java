@@ -2,6 +2,7 @@ package com.example.vladislav.currencyconverter;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.vladislav.currencyconverter.datasource.CurrencyDownloader;
 
@@ -16,7 +17,7 @@ import java.io.IOException;
  */
 public class NetworkService extends IntentService {
 
-    public static String CURRENCIES_FILE = null;
+    public static String mCurrenciesFile = null;
 
     public NetworkService() {
         super("NetworkService");
@@ -25,23 +26,26 @@ public class NetworkService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        CURRENCIES_FILE = getBaseContext().getFilesDir().getPath().toString()
-                + "/Currencies.xml";
+        mCurrenciesFile = getBaseContext().getFilesDir().getPath().toString()
+                + "/" + Consts.getmCurrenciesFile();
+//        if (!Utils.isFilePathValid(mCurrenciesFile)) {
+//            Log.e("NetworkService","Filepath is wrong!");
+//        }
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
             CurrencyDownloader currencyDownloader =
-                    new CurrencyDownloader("http://www.cbr.ru/scripts/XML_daily.aspварп",
-                            CURRENCIES_FILE);
+                    new CurrencyDownloader(Consts.getmUrl(),
+                            mCurrenciesFile);
         } catch (IOException e) {
-            e.printStackTrace();
             Intent intentInformInitialActivity = new Intent().
                     setAction(Consts.EXCEPTION).
                     putExtra(Consts.EXCEPTION,
                             e.toString());
             sendBroadcast(intentInformInitialActivity);
+            Log.e("NetworkService",e.getMessage());
         }
 
     }
