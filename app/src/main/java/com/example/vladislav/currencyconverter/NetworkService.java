@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class NetworkService extends IntentService {
 
-    public static String mCurrenciesFile = null;
+//    public static String mCurrenciesFile = null;
 
     public NetworkService() {
         super("NetworkService");
@@ -26,11 +26,10 @@ public class NetworkService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        mCurrenciesFile = getBaseContext().getFilesDir().getPath().toString()
-                + "/" + Consts.getmCurrenciesFile();
-//        if (!Utils.isFilePathValid(mCurrenciesFile)) {
-//            Log.e("NetworkService","Filepath is wrong!");
-//        }
+        Consts.setmCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
+                + "/" + Consts.getmCurrenciesFile());
+//        Consts.setmCurrenciesFile(mCurrenciesFile);
+//        System.out.println(Consts.getmCurrenciesFile());
     }
 
     @Override
@@ -38,7 +37,7 @@ public class NetworkService extends IntentService {
         try {
             CurrencyDownloader currencyDownloader =
                     new CurrencyDownloader(Consts.getmUrl(),
-                            mCurrenciesFile);
+                            Consts.getmCurrenciesFile());
         } catch (IOException e) {
             Intent intentInformInitialActivity = new Intent().
                     setAction(Consts.EXCEPTION).

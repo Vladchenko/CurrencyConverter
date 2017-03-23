@@ -21,8 +21,10 @@ public class XMLParser {
         FileReader fileReader = null;
         Serializer serializer = new Persister();
         File source = new File(Consts.getmCurrenciesFile());
-        System.out.println(Consts.getmCurrenciesFile());
-//        System.out.println(source.length());  //0 why?
+
+//        System.out.println("\n\n" + Consts.getmCurrenciesFile());
+//        System.out.println(source.length() + "\n\n");  //0 why?
+
         try {
             fileReader = new FileReader(source);
         } catch (FileNotFoundException e) {
