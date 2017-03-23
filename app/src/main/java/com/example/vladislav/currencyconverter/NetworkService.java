@@ -33,7 +33,7 @@ public class NetworkService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try {
             CurrencyDownloader currencyDownloader =
-                    new CurrencyDownloader("http://www.cbr.ru/scripts/XML_daily.asp3546rtuy",
+                    new CurrencyDownloader("http://www.cbr.ru/scripts/XML_daily.aspварп",
                             CURRENCIES_FILE);
         } catch (IOException e) {
             e.printStackTrace();
