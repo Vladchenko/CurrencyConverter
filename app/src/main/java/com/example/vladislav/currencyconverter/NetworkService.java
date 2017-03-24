@@ -26,27 +26,26 @@ public class NetworkService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-//        Consts.setmCurrenciesFile(mCurrenciesFile);
-//        System.out.println(Consts.getmCurrenciesFile());
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Intent intentInformInitialActivity = new Intent();
         try {
-            System.out.println("onHandleIntent -  " + Consts.getmCurrenciesFile());
-            System.out.println("onHandleIntent -  " + Consts.getmUrl());
             new CurrencyDownloader().saveXMLToFile(
                     Consts.getmUrl(),
                     Consts.getmCurrenciesFile());
+            intentInformInitialActivity.
+                    setAction(Consts.REPLY).
+                    putExtra(Consts.REPLY,"Success");
+            Log.e("NetworkService","Currencies were loaded successfully.");
         } catch (IOException e) {
-//            e.printStackTrace();
-            Intent intentInformInitialActivity = new Intent().
-                    setAction(Consts.EXCEPTION).
-                    putExtra(Consts.EXCEPTION,
-                            e.toString());
-            sendBroadcast(intentInformInitialActivity);
+            intentInformInitialActivity.
+                    setAction(Consts.REPLY).
+                    putExtra(Consts.REPLY,"Fail");
             Log.e("NetworkService",e.getMessage());
         }
+        sendBroadcast(intentInformInitialActivity);
 
     }
 

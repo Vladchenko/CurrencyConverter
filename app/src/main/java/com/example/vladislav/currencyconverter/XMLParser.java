@@ -33,9 +33,8 @@ public class XMLParser {
         File source = new File(Consts.getmCurrenciesFile());
         CurrenciesContainer currenciesContainer = null;
 
-        System.out.println("XMLParser " + Consts.getmCurrenciesFile());
         currenciesContainer = serializer.read(CurrenciesContainer.class, source);
-        log.log(Level.INFO, "Deserialized");
+        log.log(Level.INFO, "Deserialized from file: " + Consts.getmCurrenciesFile());
 
         return currenciesContainer;
     }

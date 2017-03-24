@@ -12,7 +12,7 @@ import org.simpleframework.xml.Root;
 public class CurrencyBean {
 
     /**
-     * Temporary message to know the contents of an currency entry read from a web.
+     * Contents of a currency entry read from a web.
      *
      * <Valute ID="R01589">
      *      <NumCode>960</NumCode>
@@ -36,9 +36,7 @@ public class CurrencyBean {
     @Element(name="Nominal")
     private double nominal;         // say, 1
 
-    public CurrencyBean() {
-
-    }
+    public CurrencyBean() {}
 
     public String getID() {
         return ID;
@@ -79,4 +77,12 @@ public class CurrencyBean {
     public void setValue(String value) {
         this.value = value;
     }
+
+//    public double getNominal() {
+//        return nominal;
+//    }
+//
+//    public void setNominal(double nominal) {
+//        this.nominal = nominal;
+//    }
 }

@@ -23,18 +23,4 @@ public class CurrencyConverterTest {
         assertEquals(convertCurrency(200,2,3),"133,34");
     }
 
-    @Test(expected=ArithmeticException.class)
-    public void convertCurrencyTestNegativeAmount() {
-        assertEquals(convertCurrency(-100,8,6),"49");
-    }
-
-    @Test(expected=ArithmeticException.class)
-    public void convertCurrencyTestNegativeInitialCurrencyQuotation() {
-        assertEquals(convertCurrency(26.56,-1,28.62),"49");
-    }
-
-    @Test(expected=ArithmeticException.class)
-    public void convertCurrencyTestNegativeResultingCurrencyQuotation() {
-        assertEquals(convertCurrency(50,20.34,-6.1),"49");
-    }
 }

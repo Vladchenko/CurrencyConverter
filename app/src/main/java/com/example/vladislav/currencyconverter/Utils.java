@@ -29,7 +29,7 @@ public class Utils {
     }
 
     public static boolean isFilePathValid(String filePath) {
-        final String FILE_PATTERN = "([a-zA-Z]:)?(\\\\[a-zA-Z0-9_.-]+)+\\\\?";
+        final String FILE_PATTERN = "([a-zA-Z]:)?([/\\\\][a-zA-Z0-9_.-]+)+[/\\\\]?";
         Pattern pattern = Pattern.compile(FILE_PATTERN);
         Matcher matcher = pattern.matcher(filePath);
         return (matcher.matches());

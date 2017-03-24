@@ -26,16 +26,14 @@ public class CurrenciesContainer {
     @Attribute(name = "Date")
     private String date;
 
+    public CurrenciesContainer() {}
+
     public String getDate() {
         return date;
     }
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public CurrenciesContainer() {
-
     }
 
     public String getName() {

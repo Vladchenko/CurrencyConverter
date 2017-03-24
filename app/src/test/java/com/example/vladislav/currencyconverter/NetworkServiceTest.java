@@ -5,20 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.test.mock.MockApplication;
-import android.test.mock.MockContext;
+
 import static org.junit.Assert.*;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.mockito.runners.MockitoJUnitRunner;
-
-import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
 /**
  * Created by vladislav on 23.03.17.
@@ -51,13 +41,13 @@ public class NetworkServiceTest {
 //        mMockContext = mock(Application.class);
 //        when(mMockContext.registerReceiver(broadcastReceiver, mIntentFilter)).thenReturn(null);
 
-        mIntentFilter = new IntentFilter(Consts.EXCEPTION);
+        mIntentFilter = new IntentFilter(Consts.REPLY);
 //        mIntentFilter.setPriority(SYSTEM_HIGH_PRIORITY);
         mMockContext.registerReceiver(broadcastReceiver, mIntentFilter);
 
         // Starting a currency downloading service.
         Intent mIntent = new Intent(mMockContext, NetworkService.class);
-//        mIntent = new Intent().setAction(Consts.EXCEPTION).putExtra(Consts.EXCEPTION, "error");
+//        mIntent = new Intent().setAction(Consts.REPLY).putExtra(Consts.REPLY, "error");
         mMockContext.startService(mIntent);
         try {
             Thread.sleep(500);
