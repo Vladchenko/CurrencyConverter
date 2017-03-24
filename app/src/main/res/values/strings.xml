@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CurrencyConverter</string>
+    <string name="quotation_default_value">00.0000</string>
+    <string name="column1_title_text">Currency amount</string>
+    <string name="column2_title_text">Nominal</string>
+    <string name="column3_title_text">Quotation</string>
+
+</resources>
