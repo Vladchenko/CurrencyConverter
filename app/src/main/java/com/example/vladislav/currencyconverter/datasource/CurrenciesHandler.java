@@ -1,16 +1,8 @@
 package com.example.vladislav.currencyconverter.datasource;
 
-import android.support.annotation.VisibleForTesting;
-
-import com.example.vladislav.currencyconverter.Consts;
-import com.example.vladislav.currencyconverter.Utils;
-import com.example.vladislav.currencyconverter.XMLParser;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,18 +15,18 @@ import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 
 /**
- * Created by vladislav on 18.03.17.
+ * This handler establishes a connection to URL holding the currencies data, downloads it and saves
+ * to file on a disk.
  */
 
-public class CurrencyDownloader {
+public class CurrenciesHandler {
 
     private static InputStream stream = null;
-    private static Logger log = getLogger(CurrencyDownloader.class.getName());
+    private static Logger log = getLogger(CurrenciesHandler.class.getName());
 
-    public CurrencyDownloader() throws IOException {}
+    public CurrenciesHandler() throws IOException {}
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    public InputStream getStreamFromUrl(String Url) throws IOException {
+    private InputStream getStreamFromUrl(String Url) throws IOException {
 
         URL url = null;
         url = new URL(Url);
@@ -42,40 +34,14 @@ public class CurrencyDownloader {
         HttpURLConnection urlConnection = null;
 
         urlConnection = (HttpURLConnection) url.openConnection();
-        // Why does it make a downloading work ?
+        // This row helps the downloading to perform correctly.
         urlConnection.getRequestMethod();
         in = new BufferedInputStream(urlConnection.getInputStream());
 
         return in;
     }
 
-    private void readStream(InputStream in) {
-
-        InputStreamReader isw = new InputStreamReader(in);
-
-        int data = 0;
-        try {
-            data = isw.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        while (data != -1) {
-            char current = (char) data;
-            try {
-                data = isw.read();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.print(current);
-        }
-        try {
-            isw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void saveXMLToFile(String Url, String filePath) throws IOException {
+    public void persistCurrenciesToFile(String Url, String filePath) throws IOException {
 
         InputStreamReader reader = new InputStreamReader(getStreamFromUrl(Url));
         BufferedReader bufferedReader = new BufferedReader(reader);
@@ -96,6 +62,7 @@ public class CurrencyDownloader {
 
         String sCurrentLine;
         while ((sCurrentLine = bufferedReader.readLine()) != null) {
+            // Replacing , with . for parseDouble would not fail.
             sCurrentLine = sCurrentLine.replace(",",".");
             printWriter.println(sCurrentLine);
         }

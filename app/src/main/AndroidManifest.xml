@@ -21,7 +21,7 @@
         </activity>
 
         <service
-            android:name=".NetworkService"
+            android:name=".datasource.CurrenciesHandlingService"
             android:exported="false"></service>
 
     </application>

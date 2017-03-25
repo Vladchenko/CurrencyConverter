@@ -4,12 +4,12 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 /**
- * Created by vladislav on 21.03.17.
+ * Logic to convert the currency from one to another.
  */
 
 public class CurrencyConverter {
 
-    private static DecimalFormat decimalFormat = new DecimalFormat("#.####");
+    private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public static String convertCurrency(double amount, double initialQuotation, double resultingQuotation) {
 

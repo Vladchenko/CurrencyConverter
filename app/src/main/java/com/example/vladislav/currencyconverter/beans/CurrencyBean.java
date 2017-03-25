@@ -2,7 +2,6 @@ package com.example.vladislav.currencyconverter.beans;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
 
 /**
  * Created by vladislav on 20.03.17.
@@ -78,11 +77,4 @@ public class CurrencyBean {
         this.value = value;
     }
 
-//    public double getNominal() {
-//        return nominal;
-//    }
-//
-//    public void setNominal(double nominal) {
-//        this.nominal = nominal;
-//    }
 }

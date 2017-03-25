@@ -1,9 +1,6 @@
 package com.example.vladislav.currencyconverter.beans;
 
-import com.example.vladislav.currencyconverter.beans.CurrencyBean;
-
 import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -11,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by vladislav on 20.03.17.
+ * Contents for the root entry of a currency XML file.
  */
 
 @Root(name="ValCurs")

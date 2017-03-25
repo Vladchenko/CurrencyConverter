@@ -7,10 +7,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by vladislav on 22.03.17.
+ * This class has common utility methods for some classes in the application.
  */
 
-public class Utils {
+public class CommonUtils {
 
     public static void showToast(Context context, String messageToShow) {
         (new Toast(context).makeText(
@@ -21,8 +21,8 @@ public class Utils {
 
     public static boolean isURLValid(String URL) {
         final String URL_PATTERN =
-//                "/^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?/";
         "\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+
         Pattern pattern = Pattern.compile(URL_PATTERN);
         Matcher matcher = pattern.matcher(URL);
         return (matcher.matches());

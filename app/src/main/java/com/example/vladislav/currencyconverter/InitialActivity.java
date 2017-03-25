@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,7 +18,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.vladislav.currencyconverter.datasource.CurrenciesOperating;
+import com.example.vladislav.currencyconverter.beans.CurrenciesContainer;
+import com.example.vladislav.currencyconverter.datasource.CurrenciesHandlingService;
 import com.example.vladislav.currencyconverter.logic.CurrencyConverter;
 
 import java.util.ArrayList;
@@ -26,15 +27,18 @@ import java.util.List;
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
+/**
+ * Holds the presentation and logic layer for the app.
+ */
 public class InitialActivity extends AppCompatActivity {
 
-    private CurrenciesOperating mCurrencyOperating;
-    private Spinner initialCurrencySpinner;     // Spinner for a initial currency (to convert from);
-    private Spinner resultingCurrencySpinner;   // Spinner for a resulting currency  (to convert to);
-    private EditText mInitialCurrencyEditText;
-    private EditText mResultingCurrencyEditText;
-    private TextView mInitialCurrencyTextView;
-    private TextView mResultingCurrencyTextView;
+    private CurrenciesContainer mCurrencyContainer;
+    private Spinner initialCurrencySpinner;      // Spinner for a initial currency (to convert from);
+    private Spinner resultingCurrencySpinner;    // Spinner for a resulting currency  (to convert to);
+    private EditText mInitialCurrencyEditText;   // Edit text for a currency to convert from.
+    private EditText mResultingCurrencyEditText; // Edit text for a currency to convert to.
+    private TextView mInitialCurrencyTextView;   // Quotation for a currency to convert from.
+    private TextView mResultingCurrencyTextView; // Quotation for a currency to convert from.
     private BroadcastReceiver mBroadcastReceiver;
 
     @Override
@@ -42,22 +46,23 @@ public class InitialActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
-        Consts.setmCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
-                + "/" + Consts.getmCurrenciesFileName());
+        EnvironmentVars.setmCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
+                + "/" + EnvironmentVars.getmCurrenciesFileName());
 
-//        if (!Utils.isURLValid(Consts.getmUrl())) {
-//            Log.e("InitialActivity","URL is incorrect!");
-//            return;
-//        }
-        if (!Utils.isFilePathValid(Consts.getmCurrenciesFile())) {
-            Log.e("InitialActivity", "Filepath is incorrect!, program terminated.");
+        if (!CommonUtils.isURLValid(EnvironmentVars.getmUrl())) {
+            Log.e(getClass().getCanonicalName(),"URL is incorrect!");
+            return;
+        }
+        if (!CommonUtils.isFilePathValid(EnvironmentVars.getmCurrenciesFile())) {
+            Log.e(getClass().getCanonicalName(), "Filepath is incorrect!, program terminated.");
             return;
         }
 
         // Starting a currency downloading service.
-        Intent intent = new Intent(InitialActivity.this, NetworkService.class);
+        Intent intent = new Intent(InitialActivity.this, CurrenciesHandlingService.class);
         startService(intent);
 
+        // Showing a Progress Dialog, while a downloading is performed.
         final ProgressDialog progressDialog = new ProgressDialog(this, R.style.Theme_MyDialog);
         progressDialog.setTitle("Downloading currencies");
         progressDialog.setMessage("Please wait for a currencies quotations to download from web.");
@@ -66,34 +71,33 @@ public class InitialActivity extends AppCompatActivity {
             }
         });
         progressDialog.show();
-//        Utils.showToast(getApplicationContext(),
-//                "Currencies are downloading from a web.");
 
-        mCurrencyOperating = new CurrenciesOperating();
+        mCurrencyContainer = new CurrenciesContainer();
 
         // Checking if there was an exception message broadcasted.
         mBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                String exceptionString = intent.getExtras().getString(Consts.REPLY);
-                if ("Fail".equals(exceptionString)) {
+                String exceptionString = intent.getExtras().getString(EnvironmentVars.SERVICE_REPLY);
+                if (EnvironmentVars.SERVICE_FAIL.equals(exceptionString)) {
                     try {
-                        mCurrencyOperating.setmCurrencyContainer((new XMLParser()).parse());
+                        mCurrencyContainer = new CurrenciesFileDeserializer().parse();
                         progressDialog.cancel();
-                        Utils.showToast(getApplicationContext(),
+                        CommonUtils.showToast(getApplicationContext(),
                                 "Currencies web downloading failed, but a cache file downloading succeeded.");
                     } catch (Exception ex) {
                         progressDialog.setMessage("Currencies web downloading failed, cache file is " +
                                 "also corrupt - restart the app. Make sure the internet connection " +
                                 "is on the next time!");
                     }
-                } else {
+                }
+                if (EnvironmentVars.SERVICE_SUCCESS.equals(exceptionString)) {
                     progressDialog.cancel();
                     // Success in loading from a web.
                     try {
-                        mCurrencyOperating.setmCurrencyContainer((new XMLParser()).parse());
+                        mCurrencyContainer = new CurrenciesFileDeserializer().parse();
                         // Success in loading from a file.
-                        Utils.showToast(getApplicationContext(),
+                        CommonUtils.showToast(getApplicationContext(),
                                 "Currencies were successfully loaded from a web.");
                     } catch (Exception ex) {
                         progressDialog.setMessage("Currencies web downloading failed, cache file is " +
@@ -105,15 +109,9 @@ public class InitialActivity extends AppCompatActivity {
             }
         };
 
-        IntentFilter mIntentFilter = new IntentFilter(Consts.REPLY);
+        IntentFilter mIntentFilter = new IntentFilter(EnvironmentVars.SERVICE_REPLY);
         mIntentFilter.setPriority(SYSTEM_HIGH_PRIORITY);
         registerReceiver(mBroadcastReceiver, mIntentFilter);
-
-//        try {
-//            mCurrencyOperating.setmCurrencyContainer((new XMLParser()).parse());
-//        } catch (Exception ex) {
-//        }
-
 
         mInitialCurrencyEditText = (EditText) findViewById(R.id.initial_currency_edit_text);
         mResultingCurrencyEditText = (EditText) findViewById(R.id.resulting_currency_edit_text);
@@ -127,23 +125,25 @@ public class InitialActivity extends AppCompatActivity {
                 if (initialCurrencySpinner.getSelectedItem().toString().equals(
                         resultingCurrencySpinner.getSelectedItem().toString())) {
                     // Saying that currencies match
-                    Utils.showToast(getApplicationContext(), "Currencies match, choose a different one");
+                    CommonUtils.showToast(getApplicationContext(), "Currencies match, choose a different one");
                 } else {
+                    // Perform calculation only if an amount to be converted is present in a respective text_edit.
                     if (!mInitialCurrencyEditText.getText().toString().equals("")) {
                         try {
                             String operationResult = CurrencyConverter.convertCurrency(
                                     Double.parseDouble(mInitialCurrencyEditText.getText().toString()),
-                                    Double.parseDouble(mCurrencyOperating.getmCurrencyContainer().getmCurrenciesList().get(
+                                    Double.parseDouble(mCurrencyContainer.getmCurrenciesList().get(
                                             initialCurrencySpinner.getSelectedItemPosition()).getValue()),
-                                    Double.parseDouble(mCurrencyOperating.getmCurrencyContainer().getmCurrenciesList().get(
+                                    Double.parseDouble(mCurrencyContainer.getmCurrenciesList().get(
                                             resultingCurrencySpinner.getSelectedItemPosition()).getValue()));
                             mResultingCurrencyEditText.setText(operationResult);
                         } catch (ArithmeticException | NumberFormatException ex) {
                             mResultingCurrencyEditText.setText("n/a");
-                            Utils.showToast(getApplicationContext(), "Amount is wrong.");
+                            CommonUtils.showToast(getApplicationContext(), "Some value in currency " +
+                                    "convertion is wrong. Check amount and quotations.");
                         }
                     } else {
-                        Utils.showToast(getApplicationContext(), "Currency amount is absent");
+                        CommonUtils.showToast(getApplicationContext(), "Currency amount is absent");
                     }
                 }
             }
@@ -152,19 +152,13 @@ public class InitialActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     private void submitCurrenciesCharCodesToSpinners() {
 
-//        mCurrencyOperating = new CurrenciesOperating();
         ArrayAdapter<String> currenciesAdapter;
         List<String> charCodeList = new ArrayList<>();
 
-        for (int i = 0; i < mCurrencyOperating.getmCurrencyContainer().getmCurrenciesList().size(); i++) {
-            charCodeList.add(mCurrencyOperating.getmCurrencyContainer().getmCurrenciesList().get(i).getCharacterCode());
+        for (int i = 0; i < mCurrencyContainer.getmCurrenciesList().size(); i++) {
+            charCodeList.add(mCurrencyContainer.getmCurrenciesList().get(i).getCharacterCode());
         }
 
         initialCurrencySpinner = (Spinner) findViewById(R.id.initial_currency_spinner);
@@ -173,27 +167,23 @@ public class InitialActivity extends AppCompatActivity {
         initialCurrencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mInitialCurrencyTextView.setText(mCurrencyOperating.getmCurrencyContainer().getmCurrenciesList().get(
+                mInitialCurrencyTextView.setText(mCurrencyContainer.getmCurrenciesList().get(
                         position).getValue());
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         resultingCurrencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mResultingCurrencyTextView.setText(mCurrencyOperating.getmCurrencyContainer().getmCurrenciesList().get(
+                mResultingCurrencyTextView.setText(mCurrencyContainer.getmCurrenciesList().get(
                         position).getValue());
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         currenciesAdapter = new ArrayAdapter<>(getApplicationContext(),

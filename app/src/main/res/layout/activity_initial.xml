@@ -75,7 +75,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.8"
-                android:gravity="center_horizontal" />
+                android:gravity="center_horizontal"
+                android:paddingLeft="@dimen/spinner_item_padding" />
 
             <TextView
                 android:id="@+id/initial_currency_quotation_text_view"
@@ -108,7 +109,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.8"
-                android:gravity="center_horizontal" />
+                android:gravity="center_horizontal"
+                android:paddingLeft="@dimen/spinner_item_padding"/>
 
             <TextView
                 android:id="@+id/resulting_currency_quotation_text_view"
@@ -127,7 +129,7 @@
         android:id="@+id/convert_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/edit_texts_margin"
+        android:layout_marginTop="@dimen/button_convert_top_margin"
         android:background="@drawable/customborder2"
         android:text="Convert" />
 

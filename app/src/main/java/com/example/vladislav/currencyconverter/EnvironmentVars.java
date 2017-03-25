@@ -1,29 +1,26 @@
 package com.example.vladislav.currencyconverter;
 
 /**
- * Created by vladislav on 20.03.17.
+ * Holds the variables used throught the application.
  */
-public class Consts {
+public class EnvironmentVars {
 
-    public static final String REPLY = "reply";
+    public static final String SERVICE_REPLY = "reply";
+    public static final String SERVICE_FAIL = "fail";
+    public static final String SERVICE_SUCCESS = "success";
+
     private static String mUrl = "http://www.cbr.ru/scripts/XML_daily.asp";
     private static String mCurrenciesFile;
     private static String mCurrenciesFileName = "Currencies.xml";
 
-    private static Consts ourInstance = new Consts();
-
-    public static Consts getInstance() {
-        return ourInstance;
-    }
-
-    private Consts() {}
+    private EnvironmentVars() {}
 
     public static String getmUrl() {
         return mUrl;
     }
 
     public static void setmUrl(String mUrl) {
-        Consts.mUrl = mUrl;
+        EnvironmentVars.mUrl = mUrl;
     }
 
     public static String getmCurrenciesFile() {
@@ -31,7 +28,7 @@ public class Consts {
     }
 
     public static void setmCurrenciesFile(String mCurrenciesFile) {
-        Consts.mCurrenciesFile = mCurrenciesFile;
+        EnvironmentVars.mCurrenciesFile = mCurrenciesFile;
     }
 
     public static String getmCurrenciesFileName() {
@@ -39,6 +36,6 @@ public class Consts {
     }
 
     public static void setmCurrenciesFileName(String mCurrenciesFileName) {
-        Consts.mCurrenciesFileName = mCurrenciesFileName;
+        EnvironmentVars.mCurrenciesFileName = mCurrenciesFileName;
     }
 }

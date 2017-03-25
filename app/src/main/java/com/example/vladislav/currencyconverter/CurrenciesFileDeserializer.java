@@ -1,7 +1,7 @@
 package com.example.vladislav.currencyconverter;
 
 import com.example.vladislav.currencyconverter.beans.CurrenciesContainer;
-import com.example.vladislav.currencyconverter.datasource.CurrencyDownloader;
+import com.example.vladislav.currencyconverter.datasource.CurrenciesHandler;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -14,27 +14,25 @@ import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 
 /**
- * Created by vladislav on 20.03.17.
+ * Uploading, parsing and deserializing the currencies data into java beans.
  */
 
-public class XMLParser {
+public class CurrenciesFileDeserializer {
 
-    private static Logger log = getLogger(CurrencyDownloader.class.getName());
-//    CurrenciesContainer currenciesContainer = null;
+    private static Logger log = getLogger(CurrenciesHandler.class.getName());
 
-    public XMLParser() {
-//        this.currenciesContainer = currenciesContainer;
+    public CurrenciesFileDeserializer() {
     }
 
     public CurrenciesContainer parse() throws Exception {
 
         FileReader fileReader = null;
         Serializer serializer = new Persister();
-        File source = new File(Consts.getmCurrenciesFile());
+        File source = new File(EnvironmentVars.getmCurrenciesFile());
         CurrenciesContainer currenciesContainer = null;
 
         currenciesContainer = serializer.read(CurrenciesContainer.class, source);
-        log.log(Level.INFO, "Deserialized from file: " + Consts.getmCurrenciesFile());
+        log.log(Level.INFO, "Deserialized from file: " + EnvironmentVars.getmCurrenciesFile());
 
         return currenciesContainer;
     }
