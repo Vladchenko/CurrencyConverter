@@ -2,7 +2,6 @@ package com.example.vladislav.currencyconverter.datasource;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.example.vladislav.currencyconverter.EnvironmentVars;
@@ -41,7 +40,7 @@ public class CurrenciesHandlingService extends IntentService {
             Log.e(getClass().getCanonicalName(),e.getMessage());
         }
         // Sending a broadcast message of the outcome of a downloading.
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intentInformInitialActivity);
+        sendBroadcast(intentInformInitialActivity);
 
     }
 
