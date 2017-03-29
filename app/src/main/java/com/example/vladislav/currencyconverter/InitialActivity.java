@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -111,8 +112,7 @@ public class InitialActivity extends AppCompatActivity {
 
         IntentFilter mIntentFilter = new IntentFilter(EnvironmentVars.SERVICE_REPLY);
         mIntentFilter.setPriority(SYSTEM_HIGH_PRIORITY);
-        registerReceiver(mBroadcastReceiver, mIntentFilter);
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver, mIntentFilter);
         mInitialCurrencyEditText = (EditText) findViewById(R.id.initial_currency_edit_text);
         mResultingCurrencyEditText = (EditText) findViewById(R.id.resulting_currency_edit_text);
         mInitialCurrencyTextView = (TextView) findViewById(R.id.initial_currency_quotation_text_view);
