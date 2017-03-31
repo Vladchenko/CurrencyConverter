@@ -13,6 +13,8 @@ public class CurrencyConverter {
 
     public static String convertCurrency(double amount, double initialQuotation, double resultingQuotation) {
 
+        String result;
+
         if (amount <= 0
                 || initialQuotation <=0
                 || resultingQuotation <=0) {
@@ -23,10 +25,12 @@ public class CurrencyConverter {
         double value = amount * initialQuotation / resultingQuotation;
 
         if (value == (int)value) {
-            return Integer.toString((int)value);
+            result = Integer.toString((int)value);
         } else {
-            return decimalFormat.format(value);
+            result = decimalFormat.format(value);
         }
+
+        return result.replace(".",",");
     }
 
 }

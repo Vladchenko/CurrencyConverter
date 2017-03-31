@@ -13,6 +13,9 @@ public class EnvironmentVars {
     private static String mCurrenciesFile;
     private static String mCurrenciesFileName = "Currencies.xml";
 
+    private static int mForemostInitialCurrency = 11;
+    private static int mForemostResultingCurrency = 0;
+
     private EnvironmentVars() {}
 
     public static String getmUrl() {
@@ -37,5 +40,21 @@ public class EnvironmentVars {
 
     public static void setmCurrenciesFileName(String mCurrenciesFileName) {
         EnvironmentVars.mCurrenciesFileName = mCurrenciesFileName;
+    }
+
+    public static int getmForemostInitialCurrency() {
+        return mForemostInitialCurrency;
+    }
+
+    public static void setmForemostInitialCurrency(int mForemostInitialCurrency) {
+        EnvironmentVars.mForemostInitialCurrency = mForemostInitialCurrency;
+    }
+
+    public static int getmForemostResultingCurrency() {
+        return mForemostResultingCurrency;
+    }
+
+    public static void setmForemostResultingCurrency(int mForemostResultingCurrency) {
+        EnvironmentVars.mForemostResultingCurrency = mForemostResultingCurrency;
     }
 }

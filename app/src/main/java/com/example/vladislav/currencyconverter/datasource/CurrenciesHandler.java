@@ -67,6 +67,7 @@ public class CurrenciesHandler {
             printWriter.println(sCurrentLine);
         }
         log.log(Level.INFO, "Data is saved.");
+        reader.close();
         printWriter.close();
     }
 

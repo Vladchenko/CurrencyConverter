@@ -1,6 +1,7 @@
 package com.example.vladislav.currencyconverter;
 
 import com.example.vladislav.currencyconverter.beans.CurrenciesContainer;
+import com.example.vladislav.currencyconverter.beans.CurrencyBean;
 import com.example.vladislav.currencyconverter.datasource.CurrenciesHandler;
 
 import org.simpleframework.xml.Serializer;
@@ -29,12 +30,24 @@ public class CurrenciesFileDeserializer {
         FileReader fileReader = null;
         Serializer serializer = new Persister();
         File source = new File(EnvironmentVars.getmCurrenciesFile());
-        CurrenciesContainer currenciesContainer = null;
+        CurrenciesContainer currenciesContainer = new CurrenciesContainer();
 
-        currenciesContainer = serializer.read(CurrenciesContainer.class, source);
+        // Adding a ruble currency to the start of a currencies list.
+        currenciesContainer.addCurrency(getRubleCurrencyBean());
+        // Adding all the rest currencies from a deserializer.
+        currenciesContainer.addCurrencies(serializer.read(CurrenciesContainer.class, source));
         log.log(Level.INFO, "Deserialized from file: " + EnvironmentVars.getmCurrenciesFile());
 
         return currenciesContainer;
+    }
+
+    private CurrencyBean getRubleCurrencyBean() {
+        CurrencyBean currencyBean = new CurrencyBean();
+        currencyBean.setCharacterCode("RUB");
+        currencyBean.setNumericCode(643);
+        currencyBean.setName("Ruble");
+        currencyBean.setValue("1");
+        return currencyBean;
     }
 
 }

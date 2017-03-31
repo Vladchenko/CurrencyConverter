@@ -53,4 +53,12 @@ public class CurrenciesContainer {
         this.mCurrenciesList = mCurrenciesList;
     }
 
+    public void addCurrencies(CurrenciesContainer currenciesContainer) {
+        mCurrenciesList.addAll(currenciesContainer.getmCurrenciesList());
+    }
+
+    public void addCurrency(CurrencyBean currencyBean) {
+        mCurrenciesList.add(currencyBean);
+    }
+
 }
