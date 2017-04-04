@@ -26,6 +26,7 @@ import com.example.vladislav.currencyconverter.logic.CurrencyConverter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
@@ -35,6 +36,7 @@ import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 public class InitialActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button mConvertButton;  // Trigger to perform the currency conversion.
+    private IntentFilter mIntentFilter;
     private Spinner mInitialCurrencySpinner;    // Spinner for a initial currency (to convert from);
     private Spinner mResultingCurrencySpinner;  // Spinner for a resulting currency  (to convert to);
     private EditText mInitialCurrencyEditText;   // Edit text for a currency to convert from.
@@ -49,6 +51,7 @@ public class InitialActivity extends AppCompatActivity implements View.OnClickLi
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
+//        Locale.setDefault(new Locale("ru", "RU"));
         EnvironmentVars.setmCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
                 + "/" + EnvironmentVars.getmCurrenciesFileName());
 
@@ -64,7 +67,7 @@ public class InitialActivity extends AppCompatActivity implements View.OnClickLi
         // Starting a currency downloading service.
         Intent intent = new Intent(InitialActivity.this, CurrenciesHandlingService.class);
         startService(intent);
-        IntentFilter mIntentFilter = new IntentFilter(EnvironmentVars.SERVICE_REPLY);
+        mIntentFilter = new IntentFilter(EnvironmentVars.SERVICE_REPLY);
         mIntentFilter.setPriority(SYSTEM_HIGH_PRIORITY);
 
         mCurrencyContainer = new CurrenciesContainer();
@@ -84,18 +87,19 @@ public class InitialActivity extends AppCompatActivity implements View.OnClickLi
         mConvertButton.setOnClickListener(this);
 
         implementBroadcastReceiver(progressDialog);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver, mIntentFilter);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver, mIntentFilter);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        try {
-            unregisterReceiver(mBroadcastReceiver);
-        } catch (IllegalArgumentException iae) {
-
-        }
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
     }
 
     @Override

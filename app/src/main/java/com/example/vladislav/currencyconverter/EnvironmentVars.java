@@ -13,6 +13,7 @@ public class EnvironmentVars {
     private static String mCurrenciesFile;
     private static String mCurrenciesFileName = "Currencies.xml";
 
+    // Currencies that will be chosen foremost.
     private static int mForemostInitialCurrency = 11;
     private static int mForemostResultingCurrency = 0;
 
