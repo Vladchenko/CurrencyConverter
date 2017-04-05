@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
+//        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -30,17 +30,14 @@ configurations {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.1.1'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:multidex:1.0.0'
-// https://mvnrepository.com/artifact/org.simpleframework/simple-xml
-    compile group: 'org.simpleframework', name: 'simple-xml', version: '2.7.1'
-// https://mvnrepository.com/artifact/org.mockito/mockito-all
-    compile group: 'org.mockito', name: 'mockito-all', version: '1.8.4'
-
-
+    //    compile 'com.android.support:multidex:1.0.0'
+    // https://mvnrepository.com/artifact/org.simpleframework/simple-xml
+    compile 'org.simpleframework:simple-xml:2.7.1'
+    // https://mvnrepository.com/artifact/org.mockito/mockito-all
 }
