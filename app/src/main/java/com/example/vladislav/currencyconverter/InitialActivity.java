@@ -20,13 +20,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.vladislav.currencyconverter.beans.CurrenciesContainer;
-import com.example.vladislav.currencyconverter.beans.CurrencyBean;
 import com.example.vladislav.currencyconverter.datasource.CurrenciesHandlingService;
 import com.example.vladislav.currencyconverter.logic.CurrencyConverter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
@@ -50,7 +48,7 @@ public class InitialActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_initial);
+        setContentView(R.layout.initial_activity);
 //        Locale.setDefault(new Locale("ru", "RU"));
         EnvironmentVars.setmCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
                 + "/" + EnvironmentVars.getmCurrenciesFileName());
@@ -170,8 +168,8 @@ public class InitialActivity extends AppCompatActivity implements View.OnClickLi
         });
 
         currenciesAdapter = new ArrayAdapter<>(getApplicationContext(),
-                R.layout.spinner_item, charCodeList);
-        currenciesAdapter.setDropDownViewResource(R.layout.spinner_item);
+                R.layout.item_spinner, charCodeList);
+        currenciesAdapter.setDropDownViewResource(R.layout.item_spinner);
         mInitialCurrencySpinner.setAdapter(currenciesAdapter);
         mResultingCurrencySpinner.setAdapter(currenciesAdapter);
         // Initially selected currencies.
