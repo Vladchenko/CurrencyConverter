@@ -8,7 +8,6 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
 import java.io.File;
-import java.io.FileReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +26,6 @@ public class CurrenciesFileDeserializer {
 
     public CurrenciesContainer parse() throws Exception {
 
-        FileReader fileReader = null;
         Serializer serializer = new Persister();
         File source = new File(EnvironmentVars.getmCurrenciesFile());
         CurrenciesContainer currenciesContainer = new CurrenciesContainer();
