@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.vladislav.currencyconverter.beans.CurrenciesContainer;
+import com.example.vladislav.currencyconverter.beans.CurrencyBean;
 import com.example.vladislav.currencyconverter.datasource.CurrenciesHandlingService;
 import com.example.vladislav.currencyconverter.logic.CurrencyConverter;
 
@@ -39,20 +40,25 @@ import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
  */
 public class InitialActivity extends AppCompatActivity {
 
+    // Poition of a USD currency in a currencies spinner's list
+    private final int USD_POSITION = 10;
+    // Poition of a RUB currency in a currencies spinner's list
+    private final int RUB_POSITION = 0;
+
     private CurrenciesContainer mCurrencyContainer;
-    private Spinner mInitialCurrencySpinner;      // Spinner for a initial currency (to convert from);
-    private Spinner mResultingCurrencySpinner;    // Spinner for a resulting currency  (to convert to);
-    private EditText mInitialCurrencyEditText;   // Edit text for a currency to convert from.
-    private EditText mResultingCurrencyEditText; // Edit text for a currency to convert to.
-    private TextView mInitialCurrencyTextView;   // Quotation for a currency to convert from.
-    private TextView mResultingCurrencyTextView; // Quotation for a currency to convert from.
+    private Spinner mInitialCurrencySpinner;        // Spinner for a initial currency (to convert from);
+    private Spinner mResultingCurrencySpinner;      // Spinner for a resulting currency  (to convert to);
+    private EditText mInitialCurrencyEditText;      // Edit text for a currency to convert from.
+    private EditText mResultingCurrencyEditText;    // Edit text for a currency to convert to.
+    private TextView mInitialCurrencyTextView;      // Quotation for a currency to convert from.
+    private TextView mResultingCurrencyTextView;    // Quotation for a currency to convert from.
     private BroadcastReceiver mBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_initial);
+        setContentView(R.layout.initial_activity);
         EnvironmentVars.setCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
                 + "/" + EnvironmentVars.getCurrenciesFileName());
 
@@ -70,13 +76,7 @@ public class InitialActivity extends AppCompatActivity {
         startService(intent);
 
         // Showing a Progress Dialog, while a downloading is performed.
-        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.AppTheme);
-        progressDialog.setTitle("Downloading currencies");
-        progressDialog.setMessage("Please wait for a currencies quotations to download from web.");
-        progressDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
+        final ProgressDialog progressDialog = prepareProgressDialog();
         progressDialog.show();
 
         mCurrencyContainer = new CurrenciesContainer();
@@ -88,14 +88,22 @@ public class InitialActivity extends AppCompatActivity {
         mIntentFilter.setPriority(SYSTEM_HIGH_PRIORITY);
         registerReceiver(mBroadcastReceiver, mIntentFilter);
 
-        mInitialCurrencyEditText = (EditText) findViewById(R.id.initial_currency_edit_text);
-        mResultingCurrencyEditText = (EditText) findViewById(R.id.resulting_currency_edit_text);
-        mInitialCurrencyTextView = (TextView) findViewById(R.id.initial_currency_quotation_text_view);
-        mResultingCurrencyTextView = (TextView) findViewById(R.id.resulting_currency_quotation_text_view);
+        prepareViews();
 
         Button convertButton = (Button) findViewById(R.id.convert_button);
         convertButton.setOnClickListener(prepareClickListener());
 
+    }
+
+    private ProgressDialog prepareProgressDialog() {
+        ProgressDialog progressDialog = new ProgressDialog(this, R.style.AppTheme);
+        progressDialog.setTitle("Downloading currencies");
+        progressDialog.setMessage("Please wait for a currencies quotations to download from web.");
+        progressDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        return progressDialog;
     }
 
     private BroadcastReceiver prepareBroadcastReceiver(final ProgressDialog progressDialog) {
@@ -130,6 +138,7 @@ public class InitialActivity extends AppCompatActivity {
                     }
                 }
                 submitCurrenciesCharCodesToSpinners();
+                setInitialCurrenciesInSpinners();
             }
         };
     }
@@ -166,10 +175,26 @@ public class InitialActivity extends AppCompatActivity {
         };
     }
 
+    /**
+     * Since the list of a currencies loaded from inet does not have a RUB currency, this method
+     * adds it to this list.
+     */
+    private CurrencyBean collectRUBCurrency() {
+        CurrencyBean currencyBean = new CurrencyBean();
+        currencyBean.setCharacterCode("RUB");
+        currencyBean.setNumericCode(643);
+        currencyBean.setValue("1");
+        return currencyBean;
+    }
+
     private void submitCurrenciesCharCodesToSpinners() {
 
         ArrayAdapter<String> currenciesAdapter;
         List<String> charCodeList = new ArrayList<>();
+
+        CurrencyBean rubCurrencyBean = collectRUBCurrency();
+        mCurrencyContainer.getmCurrenciesList().set(0, rubCurrencyBean);
+        mInitialCurrencyTextView.setText(rubCurrencyBean.getCharacterCode());
 
         for (int i = 0; i < mCurrencyContainer.getmCurrenciesList().size(); i++) {
             charCodeList.add(mCurrencyContainer.getmCurrenciesList().get(i).getCharacterCode());
@@ -200,11 +225,26 @@ public class InitialActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        currenciesAdapter = new ArrayAdapter<>(getApplicationContext(),
-                R.layout.spinner_item, charCodeList);
-        currenciesAdapter.setDropDownViewResource(R.layout.spinner_item);
+        currenciesAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                R.layout.item_spinner, charCodeList);
+        currenciesAdapter.setDropDownViewResource(R.layout.item_spinner);
         mInitialCurrencySpinner.setAdapter(currenciesAdapter);
         mResultingCurrencySpinner.setAdapter(currenciesAdapter);
+    }
+
+    /**
+     * Setting a currencies in a spinners when an application starts.
+     */
+    private void setInitialCurrenciesInSpinners() {
+        mInitialCurrencySpinner.setSelection(USD_POSITION);
+        mResultingCurrencySpinner.setSelection(RUB_POSITION);
+    }
+
+    private void prepareViews() {
+        mInitialCurrencyEditText = (EditText) findViewById(R.id.initial_currency_edit_text);
+        mResultingCurrencyEditText = (EditText) findViewById(R.id.resulting_currency_edit_text);
+        mInitialCurrencyTextView = (TextView) findViewById(R.id.initial_currency_quotation_text_view);
+        mResultingCurrencyTextView = (TextView) findViewById(R.id.resulting_currency_quotation_text_view);
     }
 
     @Override

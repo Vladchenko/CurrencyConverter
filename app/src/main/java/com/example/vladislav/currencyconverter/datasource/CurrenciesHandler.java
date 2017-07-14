@@ -59,6 +59,11 @@ public class CurrenciesHandler {
         }
         sLog.log(Level.INFO, "Saving currency data to file named - " + filePath);
 
+        writeToFile(printWriter, bufferedReader);
+
+    }
+
+    private void writeToFile(PrintWriter printWriter, BufferedReader bufferedReader) throws IOException {
         String sCurrentLine;
         while ((sCurrentLine = bufferedReader.readLine()) != null) {
             // Replacing , with . for parseDouble would not fail.

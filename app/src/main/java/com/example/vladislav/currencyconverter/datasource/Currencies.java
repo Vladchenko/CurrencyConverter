@@ -2,15 +2,10 @@ package com.example.vladislav.currencyconverter.datasource;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Text;
-import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
-import java.net.URL;
-import java.util.List;
-
 @Root(name="ValCurs")
-public class ValCurs {
+public class Currencies {
 
     @Attribute(name="name", required=false)
     String name;
@@ -19,7 +14,7 @@ public class ValCurs {
     String date;
 
     @Element(name="ValCurs", required=false)
-    Valute valute;
+    Currency valute;
 
     public String getName() {return this.name;}
     public void setName(String value) {this.name = value;}
@@ -27,11 +22,11 @@ public class ValCurs {
     public String getDate() {return this.date;}
     public void setDate(String value) {this.date = value;}
 
-    public Valute getValute() {return this.valute;}
-    public void setValute(Valute value) {this.valute = value;}
+    public Currency getValute() {return this.valute;}
+    public void setValute(Currency value) {this.valute = value;}
 
     @Element(name="Valute")
-    public static class Valute {
+    public static class Currency {
 
         @Element(name="CharCode", required=false)
         String charCode;

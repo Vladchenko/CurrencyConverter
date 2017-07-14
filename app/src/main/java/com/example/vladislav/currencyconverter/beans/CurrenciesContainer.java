@@ -49,7 +49,7 @@ public class CurrenciesContainer {
         return mCurrenciesList;
     }
 
-    public void setmCurrenciesList(List<CurrencyBean> mCurrenciesList) {
+    public void setCurrenciesList(List<CurrencyBean> mCurrenciesList) {
         this.mCurrenciesList = mCurrenciesList;
     }
 
