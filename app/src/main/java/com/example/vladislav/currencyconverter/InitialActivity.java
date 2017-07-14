@@ -28,9 +28,10 @@ import java.util.List;
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
-// Make a currencies swap button.
-// Make a methods smaller
-// Put all the resources to resources folder
+// 1. Put all the resources to resources folder
+// 2. Make a landscape look the same as portrait.
+// 3. Make a methods smaller
+
 
 /**
  * Holds the presentation and logic layer for the app.
