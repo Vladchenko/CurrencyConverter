@@ -27,8 +27,8 @@ public class CurrenciesHandlingService extends IntentService {
         Intent intentInformInitialActivity = new Intent();
         try {
             new CurrenciesHandler().persistCurrenciesToFile(
-                    EnvironmentVars.getmUrl(),
-                    EnvironmentVars.getmCurrenciesFile());
+                    EnvironmentVars.getUrl(),
+                    EnvironmentVars.getCurrenciesFile());
             intentInformInitialActivity.
                     setAction(EnvironmentVars.SERVICE_REPLY).
                     putExtra(EnvironmentVars.SERVICE_REPLY,EnvironmentVars.SERVICE_SUCCESS);
@@ -39,7 +39,7 @@ public class CurrenciesHandlingService extends IntentService {
                     putExtra(EnvironmentVars.SERVICE_REPLY,EnvironmentVars.SERVICE_FAIL);
             Log.e(getClass().getCanonicalName(),e.getMessage());
         }
-        // Sending a broadcast message of the outcome of a downloading.
+        // Sending a broadcast message of the outcome of a currencies downloading.
         sendBroadcast(intentInformInitialActivity);
 
     }

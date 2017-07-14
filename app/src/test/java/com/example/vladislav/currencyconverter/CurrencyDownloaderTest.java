@@ -14,7 +14,7 @@ import java.io.IOException;
 public class CurrencyDownloaderTest {
 
     private CurrencyDownloader mCurrencyDownloader = new CurrencyDownloader(
-            "http://www.cbr.ru/scripts/XML_daily.asp", Consts.getmCurrenciesFile());
+            "http://www.cbr.ru/scripts/XML_daily.asp", Consts.getCurrenciesFile());
 
     public CurrencyDownloaderTest() throws IOException {
     }

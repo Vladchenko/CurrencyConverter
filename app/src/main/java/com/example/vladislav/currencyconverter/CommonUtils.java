@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * This class has common utility methods for some classes in the application.
+ * This class has common utility methods for some other classes in the application.
  */
 
 public class CommonUtils {

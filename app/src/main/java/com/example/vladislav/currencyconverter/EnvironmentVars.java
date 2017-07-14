@@ -9,33 +9,33 @@ public class EnvironmentVars {
     public static final String SERVICE_FAIL = "fail";
     public static final String SERVICE_SUCCESS = "success";
 
-    private static String mUrl = "http://www.cbr.ru/scripts/XML_daily.asp";
-    private static String mCurrenciesFile;
-    private static String mCurrenciesFileName = "Currencies.xml";
+    private static String sUrl = "http://www.cbr.ru/scripts/XML_daily.asp";
+    private static String sCurrenciesFile;
+    private static String sCurrenciesFileName = "Currencies.xml";
 
     private EnvironmentVars() {}
 
-    public static String getmUrl() {
-        return mUrl;
+    public static String getUrl() {
+        return sUrl;
     }
 
-    public static void setmUrl(String mUrl) {
-        EnvironmentVars.mUrl = mUrl;
+    public static void setUrl(String mUrl) {
+        EnvironmentVars.sUrl = mUrl;
     }
 
-    public static String getmCurrenciesFile() {
-        return mCurrenciesFile;
+    public static String getCurrenciesFile() {
+        return sCurrenciesFile;
     }
 
-    public static void setmCurrenciesFile(String mCurrenciesFile) {
-        EnvironmentVars.mCurrenciesFile = mCurrenciesFile;
+    public static void setCurrenciesFile(String mCurrenciesFile) {
+        EnvironmentVars.sCurrenciesFile = mCurrenciesFile;
     }
 
-    public static String getmCurrenciesFileName() {
-        return mCurrenciesFileName;
+    public static String getCurrenciesFileName() {
+        return sCurrenciesFileName;
     }
 
-    public static void setmCurrenciesFileName(String mCurrenciesFileName) {
-        EnvironmentVars.mCurrenciesFileName = mCurrenciesFileName;
+    public static void setCurrenciesFileName(String mCurrenciesFileName) {
+        EnvironmentVars.sCurrenciesFileName = mCurrenciesFileName;
     }
 }

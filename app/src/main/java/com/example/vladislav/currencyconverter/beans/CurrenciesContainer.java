@@ -18,27 +18,27 @@ public class CurrenciesContainer {
     private List<CurrencyBean> mCurrenciesList = new ArrayList<>();
 
     @Attribute(name = "name")
-    private String name;
+    private String mName;
 
     @Attribute(name = "Date")
-    private String date;
+    private String mDate;
 
     public CurrenciesContainer() {}
 
     public String getDate() {
-        return date;
+        return mDate;
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.mDate = date;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public List getProperties() {

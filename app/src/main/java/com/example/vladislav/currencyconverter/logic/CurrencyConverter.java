@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 
 public class CurrencyConverter {
 
-    private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
+    private static DecimalFormat sDecimalFormat = new DecimalFormat("#.##");
 
     public static String convertCurrency(double amount, double initialQuotation, double resultingQuotation) {
 
@@ -19,13 +19,13 @@ public class CurrencyConverter {
             throw new ArithmeticException("Some argument is zero or negative.");
         }
 
-        decimalFormat.setRoundingMode(RoundingMode.CEILING);
+        sDecimalFormat.setRoundingMode(RoundingMode.CEILING);
         double value = amount * initialQuotation / resultingQuotation;
 
         if (value == (int)value) {
             return Integer.toString((int)value);
         } else {
-            return decimalFormat.format(value);
+            return sDecimalFormat.format(value);
         }
     }
 

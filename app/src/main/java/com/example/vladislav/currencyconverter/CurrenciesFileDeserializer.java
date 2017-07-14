@@ -7,7 +7,6 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
 import java.io.File;
-import java.io.FileReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,20 +18,19 @@ import static java.util.logging.Logger.getLogger;
 
 public class CurrenciesFileDeserializer {
 
-    private static Logger log = getLogger(CurrenciesHandler.class.getName());
+    private static Logger sLog = getLogger(CurrenciesHandler.class.getName());
 
     public CurrenciesFileDeserializer() {
     }
 
     public CurrenciesContainer parse() throws Exception {
 
-        FileReader fileReader = null;
         Serializer serializer = new Persister();
-        File source = new File(EnvironmentVars.getmCurrenciesFile());
+        File source = new File(EnvironmentVars.getCurrenciesFile());
         CurrenciesContainer currenciesContainer = null;
 
         currenciesContainer = serializer.read(CurrenciesContainer.class, source);
-        log.log(Level.INFO, "Deserialized from file: " + EnvironmentVars.getmCurrenciesFile());
+        sLog.log(Level.INFO, "Deserialized from file: " + EnvironmentVars.getCurrenciesFile());
 
         return currenciesContainer;
     }

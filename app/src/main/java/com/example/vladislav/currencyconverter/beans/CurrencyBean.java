@@ -2,7 +2,6 @@ package com.example.vladislav.currencyconverter.beans;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
 
 /**
  * Created by vladislav on 20.03.17.
@@ -24,59 +23,55 @@ public class CurrencyBean {
      */
 
     @Attribute(name="ID")
-    private String ID;              // say, "R01589"
+    private String mID;              // say, "R01589"
     @Element(name="NumCode")
-    private int numericCode;        // say, 960
+    private int mNumericCode;        // say, 960
     @Element(name="CharCode")
-    private String characterCode;   // say, XDR
+    private String mCharacterCode;   // say, XDR
     @Element(name="Name")
-    private String name;            // no idea what's the name of this currency.
+    private String mName;            // no idea what's the name of this currency.
     @Element(name="Value")
-    private String value;           // say, 78,5631
+    private String mValue;           // say, 78,5631
     @Element(name="Nominal")
-    private double nominal;         // say, 1
-
-    public CurrencyBean() {
-
-    }
+    private double mNominal;         // say, 1
 
     public String getID() {
-        return ID;
+        return mID;
     }
 
     public void setID(String ID) {
-        this.ID = ID;
+        this.mID = ID;
     }
 
     public int getNumericCode() {
-        return numericCode;
+        return mNumericCode;
     }
 
     public void setNumericCode(int numericCode) {
-        this.numericCode = numericCode;
+        this.mNumericCode = numericCode;
     }
 
     public String getCharacterCode() {
-        return characterCode;
+        return mCharacterCode;
     }
 
     public void setCharacterCode(String characterCode) {
-        this.characterCode = characterCode;
+        this.mCharacterCode = characterCode;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public String getValue() {
-        return value;
+        return mValue;
     }
 
     public void setValue(String value) {
-        this.value = value;
+        this.mValue = value;
     }
 }

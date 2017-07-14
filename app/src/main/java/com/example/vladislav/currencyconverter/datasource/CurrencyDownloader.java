@@ -88,8 +88,6 @@ public class CurrencyDownloader {
 
         File file = new File(filePath);
         PrintWriter printWriter = new PrintWriter(filePath);
-//        FileWriter fileWriter = null;
-//        BufferedWriter bufferedWriter = null;
 
         if (!file.exists()) {
             log.log(Level.WARNING, "File path specified doesn't exist.");

@@ -8,28 +8,27 @@ public class Consts {
     public static final String EXCEPTION = "exception";
     private static String mUrl = "http://www.cbr.ru/scripts/XML_daily.asp";
     private static String mCurrenciesFile = "Currencies.xml";
-
-    private static Consts ourInstance = new Consts();
+    private static Consts sConsts = new Consts();
 
     public static Consts getInstance() {
-        return ourInstance;
+        return sConsts;
     }
 
     private Consts() {}
 
-    public static String getmUrl() {
+    public static String getUrl() {
         return mUrl;
     }
 
-    public static void setmUrl(String mUrl) {
+    public static void setUrl(String mUrl) {
         Consts.mUrl = mUrl;
     }
 
-    public static String getmCurrenciesFile() {
+    public static String getCurrenciesFile() {
         return mCurrenciesFile;
     }
 
-    public static void setmCurrenciesFile(String mCurrenciesFile) {
+    public static void setCurrenciesFile(String mCurrenciesFile) {
         Consts.mCurrenciesFile = mCurrenciesFile;
     }
 

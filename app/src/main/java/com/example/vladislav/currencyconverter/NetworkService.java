@@ -26,18 +26,18 @@ public class NetworkService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        Consts.setmCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
-                + "/" + Consts.getmCurrenciesFile());
-//        Consts.setmCurrenciesFile(mCurrenciesFile);
-//        System.out.println(Consts.getmCurrenciesFile());
+        Consts.setCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
+                + "/" + Consts.getCurrenciesFile());
+//        Consts.setCurrenciesFile(mCurrenciesFile);
+//        System.out.println(Consts.getCurrenciesFile());
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
             CurrencyDownloader currencyDownloader =
-                    new CurrencyDownloader(Consts.getmUrl(),
-                            Consts.getmCurrenciesFile());
+                    new CurrencyDownloader(Consts.getUrl(),
+                            Consts.getCurrenciesFile());
         } catch (IOException e) {
             Intent intentInformInitialActivity = new Intent().
                     setAction(Consts.EXCEPTION).

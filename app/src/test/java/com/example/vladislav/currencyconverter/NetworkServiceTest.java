@@ -5,20 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.test.mock.MockApplication;
-import android.test.mock.MockContext;
+
 import static org.junit.Assert.*;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.mockito.runners.MockitoJUnitRunner;
-
-import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
 /**
  * Created by vladislav on 23.03.17.
@@ -37,7 +27,7 @@ public class NetworkServiceTest {
 
         final Boolean[] exceptionBroacastSend = {false};
         // Setting a fake incorrect URL.
-        Consts.setmUrl("Лажа");
+        Consts.setUrl("Лажа");
 //        NetworkService myServiceMock = new NetworkService();
 
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {

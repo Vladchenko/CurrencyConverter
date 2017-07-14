@@ -27,14 +27,21 @@ import java.util.List;
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
+// TODO - Make an initial currencies to be RUS and USD.
+// Make a currencies swap button.
+// Make a methods smaller
+// Make a white fields to be empty (not white).
+// Make all the fields to have m and s prefixes
+// Put all the resources to resources folder
+
 /**
  * Holds the presentation and logic layer for the app.
  */
 public class InitialActivity extends AppCompatActivity {
 
     private CurrenciesContainer mCurrencyContainer;
-    private Spinner initialCurrencySpinner;      // Spinner for a initial currency (to convert from);
-    private Spinner resultingCurrencySpinner;    // Spinner for a resulting currency  (to convert to);
+    private Spinner mInitialCurrencySpinner;      // Spinner for a initial currency (to convert from);
+    private Spinner mResultingCurrencySpinner;    // Spinner for a resulting currency  (to convert to);
     private EditText mInitialCurrencyEditText;   // Edit text for a currency to convert from.
     private EditText mResultingCurrencyEditText; // Edit text for a currency to convert to.
     private TextView mInitialCurrencyTextView;   // Quotation for a currency to convert from.
@@ -46,14 +53,14 @@ public class InitialActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
-        EnvironmentVars.setmCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
-                + "/" + EnvironmentVars.getmCurrenciesFileName());
+        EnvironmentVars.setCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
+                + "/" + EnvironmentVars.getCurrenciesFileName());
 
-        if (!CommonUtils.isURLValid(EnvironmentVars.getmUrl())) {
+        if (!CommonUtils.isURLValid(EnvironmentVars.getUrl())) {
             Log.e(getClass().getCanonicalName(),"URL is incorrect!");
             return;
         }
-        if (!CommonUtils.isFilePathValid(EnvironmentVars.getmCurrenciesFile())) {
+        if (!CommonUtils.isFilePathValid(EnvironmentVars.getCurrenciesFile())) {
             Log.e(getClass().getCanonicalName(), "Filepath is incorrect!, program terminated.");
             return;
         }
@@ -63,7 +70,7 @@ public class InitialActivity extends AppCompatActivity {
         startService(intent);
 
         // Showing a Progress Dialog, while a downloading is performed.
-        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.Theme_MyDialog);
+        final ProgressDialog progressDialog = new ProgressDialog(this, R.style.AppTheme);
         progressDialog.setTitle("Downloading currencies");
         progressDialog.setMessage("Please wait for a currencies quotations to download from web.");
         progressDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
@@ -75,7 +82,24 @@ public class InitialActivity extends AppCompatActivity {
         mCurrencyContainer = new CurrenciesContainer();
 
         // Checking if there was an exception message broadcasted.
-        mBroadcastReceiver = new BroadcastReceiver() {
+        mBroadcastReceiver = prepareBroadcastReceiver(progressDialog);
+
+        IntentFilter mIntentFilter = new IntentFilter(EnvironmentVars.SERVICE_REPLY);
+        mIntentFilter.setPriority(SYSTEM_HIGH_PRIORITY);
+        registerReceiver(mBroadcastReceiver, mIntentFilter);
+
+        mInitialCurrencyEditText = (EditText) findViewById(R.id.initial_currency_edit_text);
+        mResultingCurrencyEditText = (EditText) findViewById(R.id.resulting_currency_edit_text);
+        mInitialCurrencyTextView = (TextView) findViewById(R.id.initial_currency_quotation_text_view);
+        mResultingCurrencyTextView = (TextView) findViewById(R.id.resulting_currency_quotation_text_view);
+
+        Button convertButton = (Button) findViewById(R.id.convert_button);
+        convertButton.setOnClickListener(prepareClickListener());
+
+    }
+
+    private BroadcastReceiver prepareBroadcastReceiver(final ProgressDialog progressDialog) {
+        return new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String exceptionString = intent.getExtras().getString(EnvironmentVars.SERVICE_REPLY);
@@ -108,22 +132,14 @@ public class InitialActivity extends AppCompatActivity {
                 submitCurrenciesCharCodesToSpinners();
             }
         };
+    }
 
-        IntentFilter mIntentFilter = new IntentFilter(EnvironmentVars.SERVICE_REPLY);
-        mIntentFilter.setPriority(SYSTEM_HIGH_PRIORITY);
-        registerReceiver(mBroadcastReceiver, mIntentFilter);
-
-        mInitialCurrencyEditText = (EditText) findViewById(R.id.initial_currency_edit_text);
-        mResultingCurrencyEditText = (EditText) findViewById(R.id.resulting_currency_edit_text);
-        mInitialCurrencyTextView = (TextView) findViewById(R.id.initial_currency_quotation_text_view);
-        mResultingCurrencyTextView = (TextView) findViewById(R.id.resulting_currency_quotation_text_view);
-
-        Button convertButton = (Button) findViewById(R.id.convert_button);
-        convertButton.setOnClickListener(new View.OnClickListener() {
+    private View.OnClickListener prepareClickListener() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (initialCurrencySpinner.getSelectedItem().toString().equals(
-                        resultingCurrencySpinner.getSelectedItem().toString())) {
+                if (mInitialCurrencySpinner.getSelectedItem().toString().equals(
+                        mResultingCurrencySpinner.getSelectedItem().toString())) {
                     // Saying that currencies match
                     CommonUtils.showToast(getApplicationContext(), "Currencies match, choose a different one");
                 } else {
@@ -133,9 +149,9 @@ public class InitialActivity extends AppCompatActivity {
                             String operationResult = CurrencyConverter.convertCurrency(
                                     Double.parseDouble(mInitialCurrencyEditText.getText().toString()),
                                     Double.parseDouble(mCurrencyContainer.getmCurrenciesList().get(
-                                            initialCurrencySpinner.getSelectedItemPosition()).getValue()),
+                                            mInitialCurrencySpinner.getSelectedItemPosition()).getValue()),
                                     Double.parseDouble(mCurrencyContainer.getmCurrenciesList().get(
-                                            resultingCurrencySpinner.getSelectedItemPosition()).getValue()));
+                                            mResultingCurrencySpinner.getSelectedItemPosition()).getValue()));
                             mResultingCurrencyEditText.setText(operationResult);
                         } catch (ArithmeticException | NumberFormatException ex) {
                             mResultingCurrencyEditText.setText("n/a");
@@ -147,9 +163,7 @@ public class InitialActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
-
-
+        };
     }
 
     private void submitCurrenciesCharCodesToSpinners() {
@@ -161,10 +175,10 @@ public class InitialActivity extends AppCompatActivity {
             charCodeList.add(mCurrencyContainer.getmCurrenciesList().get(i).getCharacterCode());
         }
 
-        initialCurrencySpinner = (Spinner) findViewById(R.id.initial_currency_spinner);
-        resultingCurrencySpinner = (Spinner) findViewById(R.id.resulting_currency_spinner);
+        mInitialCurrencySpinner = (Spinner) findViewById(R.id.initial_currency_spinner);
+        mResultingCurrencySpinner = (Spinner) findViewById(R.id.resulting_currency_spinner);
 
-        initialCurrencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mInitialCurrencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mInitialCurrencyTextView.setText(mCurrencyContainer.getmCurrenciesList().get(
@@ -175,7 +189,7 @@ public class InitialActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        resultingCurrencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mResultingCurrencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mResultingCurrencyTextView.setText(mCurrencyContainer.getmCurrenciesList().get(
@@ -189,8 +203,8 @@ public class InitialActivity extends AppCompatActivity {
         currenciesAdapter = new ArrayAdapter<>(getApplicationContext(),
                 R.layout.spinner_item, charCodeList);
         currenciesAdapter.setDropDownViewResource(R.layout.spinner_item);
-        initialCurrencySpinner.setAdapter(currenciesAdapter);
-        resultingCurrencySpinner.setAdapter(currenciesAdapter);
+        mInitialCurrencySpinner.setAdapter(currenciesAdapter);
+        mResultingCurrencySpinner.setAdapter(currenciesAdapter);
     }
 
     @Override

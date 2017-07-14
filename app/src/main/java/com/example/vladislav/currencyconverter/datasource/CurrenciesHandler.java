@@ -21,8 +21,7 @@ import static java.util.logging.Logger.getLogger;
 
 public class CurrenciesHandler {
 
-    private static InputStream stream = null;
-    private static Logger log = getLogger(CurrenciesHandler.class.getName());
+    private static Logger sLog = getLogger(CurrenciesHandler.class.getName());
 
     public CurrenciesHandler() throws IOException {}
 
@@ -50,15 +49,15 @@ public class CurrenciesHandler {
         PrintWriter printWriter = new PrintWriter(filePath);
 
         if (!file.exists()) {
-            log.log(Level.WARNING, "File path specified doesn't exist.");
+            sLog.log(Level.WARNING, "File path specified doesn't exist.");
             if (file.isDirectory()) {
-                log.log(Level.WARNING, "File path specified is a directory, make it point to a file.");
+                sLog.log(Level.WARNING, "File path specified is a directory, make it point to a file.");
                 return;
             }
             file.createNewFile();
-            log.log(Level.WARNING, "File " + filePath + " created.");
+            sLog.log(Level.WARNING, "File " + filePath + " created.");
         }
-        log.log(Level.INFO, "Saving currency data to file named - " + filePath);
+        sLog.log(Level.INFO, "Saving currency data to file named - " + filePath);
 
         String sCurrentLine;
         while ((sCurrentLine = bufferedReader.readLine()) != null) {
@@ -66,7 +65,7 @@ public class CurrenciesHandler {
             sCurrentLine = sCurrentLine.replace(",",".");
             printWriter.println(sCurrentLine);
         }
-        log.log(Level.INFO, "Data is saved.");
+        sLog.log(Level.INFO, "Data is saved.");
         printWriter.close();
     }
 
