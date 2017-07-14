@@ -31,7 +31,8 @@
                 android:layout_weight="2.8"
                 android:gravity="center_horizontal"
                 android:maxLines="1"
-                android:text="@string/column1_title_text" />
+                android:text="@string/column1_title_text"
+                android:textColor="#000"/>
 
             <TextView
                 android:id="@+id/textView2"
@@ -40,7 +41,8 @@
                 android:layout_weight="1.8"
                 android:gravity="center_horizontal"
                 android:maxLines="1"
-                android:text="@string/column2_title_text" />
+                android:text="@string/column2_title_text"
+                android:textColor="#000"/>
 
             <TextView
                 android:id="@+id/textView3"
@@ -49,7 +51,8 @@
                 android:layout_weight="1.6"
                 android:gravity="center_horizontal"
                 android:maxLines="1"
-                android:text="@string/column3_title_text" />
+                android:text="@string/column3_title_text"
+                android:textColor="#000"/>
 
         </TableRow>
 
@@ -62,12 +65,12 @@
                 android:id="@+id/initial_currency_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/initial_currency_edit_text"
                 android:layout_weight="2.8"
                 android:background="@drawable/customborder"
                 android:ems="10"
                 android:gravity="center_horizontal"
-                android:inputType="number|numberDecimal" />
+                android:inputType="number|numberDecimal"
+                android:textCursorDrawable="@null" />
 
             <Spinner
                 android:id="@+id/initial_currency_spinner"
@@ -85,7 +88,8 @@
                 android:layout_weight="1.6"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="@string/quotation_default_value" />
+                android:text="@string/quotation_default_value"
+                android:textColor="#000"/>
 
         </TableRow>
 
@@ -101,7 +105,8 @@
                 android:background="@drawable/customborder"
                 android:ems="10"
                 android:gravity="center_horizontal"
-                android:inputType="number|numberDecimal" />
+                android:inputType="number|numberDecimal"
+                android:textCursorDrawable="@null"/>
 
             <Spinner
                 android:id="@+id/resulting_currency_spinner"
@@ -119,7 +124,8 @@
                 android:layout_weight="1.6"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="@string/quotation_default_value" />
+                android:text="@string/quotation_default_value"
+                android:textColor="#000"/>
 
         </TableRow>
 
