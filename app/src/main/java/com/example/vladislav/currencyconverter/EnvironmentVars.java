@@ -13,6 +13,10 @@ public class EnvironmentVars {
     private static String sCurrenciesFile;
     private static String sCurrenciesFileName = "Currencies.xml";
 
+    // Currencies that will be chosen foremost.
+    private static int mForemostInitialCurrency = 11;
+    private static int mForemostResultingCurrency = 0;
+
     private EnvironmentVars() {}
 
     public static String getUrl() {
@@ -37,5 +41,21 @@ public class EnvironmentVars {
 
     public static void setCurrenciesFileName(String mCurrenciesFileName) {
         EnvironmentVars.sCurrenciesFileName = mCurrenciesFileName;
+    }
+
+    public static int getmForemostInitialCurrency() {
+        return mForemostInitialCurrency;
+    }
+
+    public static void setmForemostInitialCurrency(int mForemostInitialCurrency) {
+        EnvironmentVars.mForemostInitialCurrency = mForemostInitialCurrency;
+    }
+
+    public static int getmForemostResultingCurrency() {
+        return mForemostResultingCurrency;
+    }
+
+    public static void setmForemostResultingCurrency(int mForemostResultingCurrency) {
+        EnvironmentVars.mForemostResultingCurrency = mForemostResultingCurrency;
     }
 }
