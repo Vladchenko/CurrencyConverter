@@ -28,11 +28,8 @@ import java.util.List;
 
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
-// TODO - Make an initial currencies to be RUS and USD.
 // Make a currencies swap button.
 // Make a methods smaller
-// Make a white fields to be empty (not white).
-// Make all the fields to have m and s prefixes
 // Put all the resources to resources folder
 
 /**
@@ -40,9 +37,9 @@ import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
  */
 public class InitialActivity extends AppCompatActivity {
 
-    // Poition of a USD currency in a currencies spinner's list
+    // Position of a USD currency in a currencies spinner's list
     private final int USD_POSITION = 10;
-    // Poition of a RUB currency in a currencies spinner's list
+    // Position of a RUB currency in a currencies spinner's list
     private final int RUB_POSITION = 0;
 
     private CurrenciesContainer mCurrencyContainer;
@@ -51,7 +48,7 @@ public class InitialActivity extends AppCompatActivity {
     private EditText mInitialCurrencyEditText;      // Edit text for a currency to convert from.
     private EditText mResultingCurrencyEditText;    // Edit text for a currency to convert to.
     private TextView mInitialCurrencyTextView;      // Quotation for a currency to convert from.
-    private TextView mResultingCurrencyTextView;    // Quotation for a currency to convert from.
+    private TextView mResultingCurrencyTextView;    // Quotation for a currency to convert to.
     private BroadcastReceiver mBroadcastReceiver;
 
     @Override
@@ -63,7 +60,7 @@ public class InitialActivity extends AppCompatActivity {
                 + "/" + EnvironmentVars.getCurrenciesFileName());
 
         if (!CommonUtils.isURLValid(EnvironmentVars.getUrl())) {
-            Log.e(getClass().getCanonicalName(),"URL is incorrect!");
+            Log.e(getClass().getCanonicalName(), "URL is incorrect!");
             return;
         }
         if (!CommonUtils.isFilePathValid(EnvironmentVars.getCurrenciesFile())) {
@@ -89,9 +86,8 @@ public class InitialActivity extends AppCompatActivity {
         registerReceiver(mBroadcastReceiver, mIntentFilter);
 
         prepareViews();
-
-        Button convertButton = (Button) findViewById(R.id.convert_button);
-        convertButton.setOnClickListener(prepareClickListener());
+        initializeConvertButton();
+        initializerSwapCurrenciesButton();
 
     }
 
@@ -143,8 +139,9 @@ public class InitialActivity extends AppCompatActivity {
         };
     }
 
-    private View.OnClickListener prepareClickListener() {
-        return new View.OnClickListener() {
+    private void initializeConvertButton() {
+        Button convertButton = (Button) findViewById(R.id.convert_button);
+        convertButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mInitialCurrencySpinner.getSelectedItem().toString().equals(
@@ -172,7 +169,7 @@ public class InitialActivity extends AppCompatActivity {
                     }
                 }
             }
-        };
+        });
     }
 
     /**
@@ -211,7 +208,8 @@ public class InitialActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         mResultingCurrencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -222,7 +220,8 @@ public class InitialActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         currenciesAdapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -245,6 +244,24 @@ public class InitialActivity extends AppCompatActivity {
         mResultingCurrencyEditText = (EditText) findViewById(R.id.resulting_currency_edit_text);
         mInitialCurrencyTextView = (TextView) findViewById(R.id.initial_currency_quotation_text_view);
         mResultingCurrencyTextView = (TextView) findViewById(R.id.resulting_currency_quotation_text_view);
+    }
+
+    private void initializerSwapCurrenciesButton() {
+        Button swapButton = (Button) findViewById(R.id.swap_button);
+        swapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int swapperPosition;
+                String swapperText;
+                swapperPosition = mInitialCurrencySpinner.getSelectedItemPosition();
+                mInitialCurrencySpinner.setSelection(mResultingCurrencySpinner.getSelectedItemPosition());
+                mResultingCurrencySpinner.setSelection(swapperPosition);
+                swapperText = mInitialCurrencyTextView.getText().toString();
+                mInitialCurrencyTextView.setText(mResultingCurrencyTextView.getText());
+                mResultingCurrencyTextView.setText(swapperText);
+            }
+        });
+
     }
 
     @Override

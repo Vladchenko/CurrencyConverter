@@ -5,6 +5,7 @@
     <dimen name="edit_texts_margin">10dp</dimen>
     <dimen name="button_convert_top_margin">30dp</dimen>
     <dimen name="table_rows_margin">20dp</dimen>
+    <dimen name="swap_button_margin">20dp</dimen>
     <dimen name="gradient_angle">20dp</dimen>
     <dimen name="spinner_item_padding">10dp</dimen>
     <dimen name="spinner_item_width">50dp</dimen>
