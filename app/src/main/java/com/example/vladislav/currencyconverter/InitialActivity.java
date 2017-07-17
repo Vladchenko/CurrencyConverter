@@ -30,7 +30,6 @@ import java.util.List;
 import static android.content.IntentFilter.SYSTEM_HIGH_PRIORITY;
 
 // TODO
-// 0. Make a look of currency amount edit texts to have same width.
 // 3. Make a methods smaller
 
 
@@ -92,7 +91,6 @@ public class InitialActivity extends AppCompatActivity {
         prepareViews();
         initializeConvertButton();
         initializerSwapCurrenciesButton();
-
 
     }
 
