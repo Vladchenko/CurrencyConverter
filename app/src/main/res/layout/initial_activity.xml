@@ -71,7 +71,7 @@
                 android:textCursorDrawable="@null" />
 
             <LinearLayout
-                android:layout_width="105dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -79,27 +79,28 @@
                     android:id="@+id/initial_currency_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_vertical"
                     android:paddingLeft="@dimen/spinner_item_padding"
-                    android:layout_marginTop="10dp"/>
+                    android:paddingTop="13dp"/>
 
                 <Button
                     android:id="@+id/swap_button"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/ic_autorenew_black_24dp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/ic_autorenew_black_24dp" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/initial_currency_quotation_text_view"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.6"
+                android:layout_weight="0.3"
                 android:gravity="center"
                 android:maxLines="1"
+                android:minWidth="55dp"
                 android:text="@string/quotation_default_value"
                 android:textColor="#000" />
 
@@ -122,20 +123,20 @@
 
             <Spinner
                 android:id="@+id/resulting_currency_spinner"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1.8"
                 android:gravity="center_horizontal"
                 android:paddingLeft="@dimen/spinner_item_padding" />
 
             <TextView
                 android:id="@+id/resulting_currency_quotation_text_view"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.6"
+                android:layout_weight="0.3"
                 android:gravity="center"
                 android:maxLines="1"
+                android:minWidth="55dp"
                 android:text="@string/quotation_default_value"
                 android:textColor="#000" />
 

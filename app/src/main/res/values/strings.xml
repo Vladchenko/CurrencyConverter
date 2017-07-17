@@ -8,12 +8,11 @@
     <string name="wrong_file">"Filepath is incorrect!, program terminated."</string>
     <string name="progress_dialog_title_text">"Downloading currencies"</string>
     <string name="progress_dialog_message_text">"Please wait for a currencies quotations to download from web."</string>
-    <string name="web_downloading_failed">"Currencies web downloading failed, but a cache file downloading succeeded."</string>
-    <string name="web_and_file_downloading_failed">"Currencies web downloading failed, cache file is " +
-    "also corrupt - restart the app. Make sure the internet connection is on the next time!"</string>
-    <string name="web_downloading_success">"Currencies were successfully loaded from a web."</string>
-    <string name="same_currencies">"Currencies match, change one of them."</string>
+    <string name="web_downloading_failed">"Currencies web downloading failed, cache file is used"</string>
+    <string name="web_and_file_downloading_failed">"Currencies web and file downloading failed -
+        restart the app. Make sure the internet connection is ON the next time"</string>
+    <string name="web_downloading_success">"Currencies loaded from a web"</string>
+    <string name="same_currencies">"Currencies match, change one of them"</string>
     <string name="currency_amount_absent">"Currency amount is absent"</string>
-    <string name="currency_is_wrong">"Some value in currency conversion is wrong. Check amount
-        and quotations."</string>
+    <string name="currency_is_wrong">"Wrong currency value"</string>
 </resources>

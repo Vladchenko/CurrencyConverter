@@ -28,67 +28,85 @@
                 android:id="@+id/textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6"
+                android:layout_weight="3.7"
                 android:gravity="center_horizontal"
                 android:maxLines="1"
-                android:text="@string/column1_title_text" />
+                android:text="@string/column1_title_text"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.8"
+                android:layout_weight="1.5"
                 android:gravity="center_horizontal"
                 android:maxLines="1"
-                android:text="@string/column2_title_text" />
+                android:text="@string/column2_title_text"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.6"
+                android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:maxLines="1"
-                android:text="@string/column3_title_text" />
-
+                android:text="@string/column3_title_text"
+                android:textColor="#000" />
         </TableRow>
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/table_rows_margin">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/initial_currency_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/initial_currency_edit_text"
-                android:layout_weight="6"
+                android:layout_weight="1.0"
                 android:background="@drawable/customborder"
                 android:ems="10"
                 android:gravity="center_horizontal"
-                android:inputType="number" />
+                android:inputType="number|numberDecimal"
+                android:textCursorDrawable="@null" />
 
-            <Spinner
-                android:id="@+id/initial_currency_spinner"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1.8"
-                android:gravity="center_horizontal"/>
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/initial_currency_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/spinner_item_padding"
+                    android:paddingTop="13dp"/>
+
+                <Button
+                    android:id="@+id/swap_button"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/ic_autorenew_black_24dp" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/initial_currency_quotation_text_view"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.6"
+                android:layout_weight="0.1"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="@string/quotation_default_value" />
+                android:minWidth="55dp"
+                android:text="@string/quotation_default_value"
+                android:textColor="#000" />
 
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -96,30 +114,33 @@
                 android:id="@+id/resulting_currency_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6"
+                android:layout_weight="1.0"
                 android:background="@drawable/customborder"
                 android:ems="10"
                 android:gravity="center_horizontal"
-                android:inputType="number" />
+                android:inputType="number|numberDecimal"
+                android:textCursorDrawable="@null" />
 
             <Spinner
                 android:id="@+id/resulting_currency_spinner"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1.8"
-                android:gravity="center_horizontal" />
+                android:gravity="center_horizontal"
+                android:paddingLeft="@dimen/spinner_item_padding" />
 
             <TextView
                 android:id="@+id/resulting_currency_quotation_text_view"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.6"
+                android:layout_weight="0.1"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="@string/quotation_default_value" />
+                android:minWidth="55dp"
+                android:text="@string/quotation_default_value"
+                android:textColor="#000" />
 
-        </TableRow>
+        </LinearLayout>
 
     </TableLayout>
 
@@ -127,7 +148,7 @@
         android:id="@+id/convert_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/edit_texts_margin"
+        android:layout_marginTop="@dimen/button_convert_top_margin"
         android:background="@drawable/customborder2"
         android:text="Convert" />
 
