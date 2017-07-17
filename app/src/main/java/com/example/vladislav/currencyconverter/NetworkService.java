@@ -17,8 +17,6 @@ import java.io.IOException;
  */
 public class NetworkService extends IntentService {
 
-//    public static String mCurrenciesFile = null;
-
     public NetworkService() {
         super("NetworkService");
     }
@@ -28,13 +26,12 @@ public class NetworkService extends IntentService {
         super.onCreate();
         Consts.setCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
                 + "/" + Consts.getCurrenciesFile());
-//        Consts.setCurrenciesFile(mCurrenciesFile);
-//        System.out.println(Consts.getCurrenciesFile());
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
+            // Downloading currencies
             CurrencyDownloader currencyDownloader =
                     new CurrencyDownloader(Consts.getUrl(),
                             Consts.getCurrenciesFile());

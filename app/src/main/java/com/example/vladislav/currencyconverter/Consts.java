@@ -1,35 +1,63 @@
 package com.example.vladislav.currencyconverter;
 
 /**
- * Created by vladislav on 20.03.17.
+ * Holds the variables used throught the application.
  */
 public class Consts {
 
-    public static final String EXCEPTION = "exception";
-    private static String mUrl = "http://www.cbr.ru/scripts/XML_daily.asp";
-    private static String mCurrenciesFile = "Currencies.xml";
-    private static Consts sConsts = new Consts();
+    public static final String SERVICE_REPLY = "reply";
+    public static final String SERVICE_FAIL = "fail";
+    public static final String SERVICE_SUCCESS = "success";
 
-    public static Consts getInstance() {
-        return sConsts;
-    }
+    public static final String EXCEPTION = "exception";
+
+    private static String sUrl = "http://www.cbr.ru/scripts/XML_daily.asp";
+    private static String sCurrenciesFile;
+    private static String sCurrenciesFileName = "Currencies.xml";
+
+    // Currencies that will be chosen foremost.
+    private static int mForemostInitialCurrency = 11;
+    private static int mForemostResultingCurrency = 0;
 
     private Consts() {}
 
     public static String getUrl() {
-        return mUrl;
+        return sUrl;
     }
 
     public static void setUrl(String mUrl) {
-        Consts.mUrl = mUrl;
+        Consts.sUrl = mUrl;
     }
 
     public static String getCurrenciesFile() {
-        return mCurrenciesFile;
+        return sCurrenciesFile;
     }
 
     public static void setCurrenciesFile(String mCurrenciesFile) {
-        Consts.mCurrenciesFile = mCurrenciesFile;
+        Consts.sCurrenciesFile = mCurrenciesFile;
     }
 
+    public static String getCurrenciesFileName() {
+        return sCurrenciesFileName;
+    }
+
+    public static void setCurrenciesFileName(String mCurrenciesFileName) {
+        Consts.sCurrenciesFileName = mCurrenciesFileName;
+    }
+
+    public static int getmForemostInitialCurrency() {
+        return mForemostInitialCurrency;
+    }
+
+    public static void setmForemostInitialCurrency(int mForemostInitialCurrency) {
+        Consts.mForemostInitialCurrency = mForemostInitialCurrency;
+    }
+
+    public static int getmForemostResultingCurrency() {
+        return mForemostResultingCurrency;
+    }
+
+    public static void setmForemostResultingCurrency(int mForemostResultingCurrency) {
+        Consts.mForemostResultingCurrency = mForemostResultingCurrency;
+    }
 }

@@ -26,11 +26,11 @@ public class CurrenciesFileDeserializer {
     public CurrenciesContainer parse() throws Exception {
 
         Serializer serializer = new Persister();
-        File source = new File(EnvironmentVars.getCurrenciesFile());
+        File source = new File(Consts.getCurrenciesFile());
         CurrenciesContainer currenciesContainer = null;
 
         currenciesContainer = serializer.read(CurrenciesContainer.class, source);
-        sLog.log(Level.INFO, "Deserialized from file: " + EnvironmentVars.getCurrenciesFile());
+        sLog.log(Level.INFO, "Deserialized from file: " + Consts.getCurrenciesFile());
 
         return currenciesContainer;
     }

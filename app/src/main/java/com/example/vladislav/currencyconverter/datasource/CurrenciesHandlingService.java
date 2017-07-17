@@ -4,7 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.vladislav.currencyconverter.EnvironmentVars;
+import com.example.vladislav.currencyconverter.Consts;
 
 import java.io.IOException;
 
@@ -27,16 +27,16 @@ public class CurrenciesHandlingService extends IntentService {
         Intent intentInformInitialActivity = new Intent();
         try {
             new CurrenciesHandler().persistCurrenciesToFile(
-                    EnvironmentVars.getUrl(),
-                    EnvironmentVars.getCurrenciesFile());
+                    Consts.getUrl(),
+                    Consts.getCurrenciesFile());
             intentInformInitialActivity.
-                    setAction(EnvironmentVars.SERVICE_REPLY).
-                    putExtra(EnvironmentVars.SERVICE_REPLY,EnvironmentVars.SERVICE_SUCCESS);
+                    setAction(Consts.SERVICE_REPLY).
+                    putExtra(Consts.SERVICE_REPLY, Consts.SERVICE_SUCCESS);
             Log.e(getClass().getCanonicalName(),"Currencies were loaded successfully.");
         } catch (IOException e) {
             intentInformInitialActivity.
-                    setAction(EnvironmentVars.SERVICE_REPLY).
-                    putExtra(EnvironmentVars.SERVICE_REPLY,EnvironmentVars.SERVICE_FAIL);
+                    setAction(Consts.SERVICE_REPLY).
+                    putExtra(Consts.SERVICE_REPLY, Consts.SERVICE_FAIL);
             Log.e(getClass().getCanonicalName(),e.getMessage());
         }
         // Sending a broadcast message of the outcome of a currencies downloading.

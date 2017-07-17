@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -53,21 +54,23 @@ public class InitialActivity extends AppCompatActivity {
     private TextView mInitialCurrencyTextView;      // Quotation for a currency to convert from.
     private TextView mResultingCurrencyTextView;    // Quotation for a currency to convert to.
     private BroadcastReceiver mBroadcastReceiver;
+    private Resources resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        resources = getResources();
         setContentView(R.layout.initial_activity);
-        EnvironmentVars.setCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
-                + "/" + EnvironmentVars.getCurrenciesFileName());
+        Consts.setCurrenciesFile(getBaseContext().getFilesDir().getPath().toString()
+                + "/" + Consts.getCurrenciesFileName());
 
-        if (!CommonUtils.isURLValid(EnvironmentVars.getUrl())) {
-            Log.e(getClass().getCanonicalName(), "URL is incorrect!");
+        if (!CommonUtils.isURLValid(Consts.getUrl())) {
+            Log.e(getClass().getCanonicalName(), resources.getString(R.string.wrong_URL));
             return;
         }
-        if (!CommonUtils.isFilePathValid(EnvironmentVars.getCurrenciesFile())) {
-            Log.e(getClass().getCanonicalName(), "Filepath is incorrect!, program terminated.");
+        if (!CommonUtils.isFilePathValid(Consts.getCurrenciesFile())) {
+            Log.e(getClass().getCanonicalName(), resources.getString(R.string.wrong_file));
             return;
         }
 
@@ -84,7 +87,7 @@ public class InitialActivity extends AppCompatActivity {
         // Checking if there was an exception message broadcasted.
         mBroadcastReceiver = prepareBroadcastReceiver(progressDialog);
 
-        IntentFilter mIntentFilter = new IntentFilter(EnvironmentVars.SERVICE_REPLY);
+        IntentFilter mIntentFilter = new IntentFilter(Consts.SERVICE_REPLY);
         mIntentFilter.setPriority(SYSTEM_HIGH_PRIORITY);
         registerReceiver(mBroadcastReceiver, mIntentFilter);
 
@@ -92,12 +95,13 @@ public class InitialActivity extends AppCompatActivity {
         initializeConvertButton();
         initializerSwapCurrenciesButton();
 
+
     }
 
     private ProgressDialog prepareProgressDialog() {
         ProgressDialog progressDialog = new ProgressDialog(this, R.style.AppTheme);
-        progressDialog.setTitle("Downloading currencies");
-        progressDialog.setMessage("Please wait for a currencies quotations to download from web.");
+        progressDialog.setTitle(resources.getString(R.string.progress_dialog_title_text));
+        progressDialog.setMessage(resources.getString(R.string.progress_dialog_message_text));
         progressDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             }
@@ -109,31 +113,27 @@ public class InitialActivity extends AppCompatActivity {
         return new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                String exceptionString = intent.getExtras().getString(EnvironmentVars.SERVICE_REPLY);
-                if (EnvironmentVars.SERVICE_FAIL.equals(exceptionString)) {
+                String exceptionString = intent.getExtras().getString(Consts.SERVICE_REPLY);
+                if (Consts.SERVICE_FAIL.equals(exceptionString)) {
                     try {
                         mCurrencyContainer = new CurrenciesFileDeserializer().parse();
                         progressDialog.cancel();
                         CommonUtils.showToast(getApplicationContext(),
-                                "Currencies web downloading failed, but a cache file downloading succeeded.");
+                                resources.getString(R.string.web_downloading_failed));
                     } catch (Exception ex) {
-                        progressDialog.setMessage("Currencies web downloading failed, cache file is " +
-                                "also corrupt - restart the app. Make sure the internet connection " +
-                                "is on the next time!");
+                        progressDialog.setMessage(resources.getString(R.string.web_and_file_downloading_failed));
                     }
                 }
-                if (EnvironmentVars.SERVICE_SUCCESS.equals(exceptionString)) {
+                if (Consts.SERVICE_SUCCESS.equals(exceptionString)) {
                     progressDialog.cancel();
                     // Success in loading from a web.
                     try {
                         mCurrencyContainer = new CurrenciesFileDeserializer().parse();
                         // Success in loading from a file.
                         CommonUtils.showToast(getApplicationContext(),
-                                "Currencies were successfully loaded from a web.");
+                                resources.getString(R.string.web_downloading_success));
                     } catch (Exception ex) {
-                        progressDialog.setMessage("Currencies web downloading failed, cache file is " +
-                                "also corrupt - restart the app. Make sure the internet connection " +
-                                "is on the next time!");
+                        progressDialog.setMessage(resources.getString(R.string.web_and_file_downloading_failed));
                     }
                 }
                 submitCurrenciesCharCodesToSpinners();
@@ -150,7 +150,7 @@ public class InitialActivity extends AppCompatActivity {
                 if (mInitialCurrencySpinner.getSelectedItem().toString().equals(
                         mResultingCurrencySpinner.getSelectedItem().toString())) {
                     // Saying that currencies match
-                    CommonUtils.showToast(getApplicationContext(), "Currencies match, choose a different one");
+                    resources.getString(R.string.same_currencies);
                 } else {
                     // Perform calculation only if an amount to be converted is present in a respective text_edit.
                     if (!mInitialCurrencyEditText.getText().toString().equals("")) {
@@ -164,11 +164,12 @@ public class InitialActivity extends AppCompatActivity {
                             mResultingCurrencyEditText.setText(operationResult);
                         } catch (ArithmeticException | NumberFormatException ex) {
                             mResultingCurrencyEditText.setText("n/a");
-                            CommonUtils.showToast(getApplicationContext(), "Some value in currency " +
-                                    "convertion is wrong. Check amount and quotations.");
+                            CommonUtils.showToast(getApplicationContext(), resources.getString(
+                                    R.string.currency_is_wrong));
                         }
                     } else {
-                        CommonUtils.showToast(getApplicationContext(), "Currency amount is absent");
+                        CommonUtils.showToast(getApplicationContext(),
+                                resources.getString(R.string.currency_amount_absent));
                     }
                 }
             }
